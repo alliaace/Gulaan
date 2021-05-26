@@ -70,7 +70,7 @@ class home extends Component {
             }>
                 <View style={styles.innerView}>
                     <Text style={{ fontSize: 26 }}>Your Custom Suits</Text>
-                    {this.state.history.map((item) => <SuitCard item={item} heartState={item.heartState} />)}
+                    {typeof this.state.history != 'undefined' ? this.state.history.map((item) => <SuitCard item={item} heartState={item.heartState} />) : <Text>There is no history</Text>}
                 </View>
             </ScrollView>
         );

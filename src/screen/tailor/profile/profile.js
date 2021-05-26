@@ -121,7 +121,7 @@ class profile extends Component {
                     </View>
                     <View style={{ marginTop: 20 }}>
 
-                        <NavigationButton iconname="person-circle-outline" title="My Account" isIcon={true} iconsize={30} onPress={() => this.setState({ applyTab: true, myAccount: true, myDress: false, myFavorite: false })} />
+                        <NavigationButton iconname="person-circle-outline" title="Your account" isIcon={true} iconsize={30} onPress={() => this.setState({ applyTab: true, myAccount: true, myDress: false, myFavorite: false })} />
                         <NavigationButton iconname="shirt-outline" title="My Dresses" iconsize={25} isIcon={true} onPress={() => this.setState({ applyTab: true, myAccount: false, myDress: true, myFavorite: false })} />
                         <NavigationButton iconname="heart-outline" title="My Favourites" iconsize={25} isIcon={true} onPress={() => this.setState({ applyTab: true, myAccount: false, myDress: false, myFavorite: true })} />
                         {/* <NavigationButton iconname="settings-outline" title="Settings" iconsize={25} /> */}

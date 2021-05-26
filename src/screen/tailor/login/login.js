@@ -18,10 +18,10 @@ class login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // email: 'a@a.com',
-      // password: 'admin1234',
-      email: '',
-      password: '',
+      email: 'a@a.com',
+      password: 'admin1234',
+      // email: '',
+      // password: '',
       tailordata: null,
       error_message: '',
     };
