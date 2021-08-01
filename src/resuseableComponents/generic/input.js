@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, StyleSheet, KeyboardAvoidingView } from 'react-native';
+import { View, Text, TextInput, StyleSheet, KeyboardAvoidingView, Dimensions } from 'react-native';
+import { White } from '../../Constants';
 
 export default class input extends Component {
     constructor(props) {
@@ -15,7 +16,7 @@ export default class input extends Component {
                     placeholder={this.props.placeholder}
                     style={styles.input}
                     onChangeText={this.props.onChangeText}
-                    placeholderTextColor="black"
+                    placeholderTextColor={White}
                     secureTextEntry={this.props.issecure}
                     keyboardType={this.props.type}
                 />
@@ -28,12 +29,12 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         // flex: 1,
         // flexDirection: "column"
-        width: 280,
+        width: Dimensions.get('screen').width - 20,
         borderRadius: 5,
         marginTop: 20,
         paddingLeft: 20,
-        borderColor: "black",
-        color: "black"
+        borderColor: White,
+        color: White
 
     }
 })

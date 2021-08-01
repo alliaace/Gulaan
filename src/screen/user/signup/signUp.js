@@ -6,12 +6,14 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Image,
-  ImageBackground
+  ImageBackground,
+  Dimensions
 } from 'react-native';
 import Input from '../../../resuseableComponents/generic/input';
 import CustomButton from '../../../resuseableComponents/generic/button';
 import axios from 'axios';
 import jsonserver from "../../../api/server"
+import { Mpurple, Lpurple, White, Red } from '../../../Constants';
 export default class signup extends Component {
   constructor(props) {
     super(props);
@@ -63,13 +65,15 @@ export default class signup extends Component {
             />
             <ScrollView
               contentContainerStyle={{
-                backgroundColor: 'white',
-                // paddingVertical: 20,
-                flex: 1,
-                width: "95%",
+                backgroundColor: Lpurple,
+                paddingVertical: 10,
+                width: Dimensions.get('screen').width,
+                height: '100%',
                 alignItems: 'center',
+                borderTopRightRadius: 25,
+                borderTopLeftRadius: 25,
               }}>
-              <Text style={{ fontSize: 26, fontWeight: 'bold' }}>User SignUp</Text>
+              <Text style={{ fontSize: 26, fontWeight: 'bold', color: White }}>User SignUp</Text>
               {/* <Input placeholder="Username" /> */}
               <Input
                 placeholder="First Name"
@@ -104,7 +108,7 @@ export default class signup extends Component {
 
               <CustomButton buttontext="Register" onPress={() => this.signup()} />
               <Text
-                style={{ marginTop: 20, color: 'blue' }}
+                style={{ marginTop: 20, color: White }}
                 onPress={() => this.props.navigation.navigate('SIGNIN')}>
                 Have an account? Login here
               </Text>
@@ -117,15 +121,15 @@ export default class signup extends Component {
 }
 const styles = StyleSheet.create({
   main: {
-    backgroundColor: 'green',
+    // backgroundColor: 'green',
     flexGrow: 1,
-    paddingVertical: 10,
-    paddingHorizontal: 10,
+    // paddingVertical: 10,
+    // paddingHorizontal: 10,
   },
   innerView: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: Mpurple,
     alignItems: 'center',
-    paddingVertical: 10,
+    // paddingVertical: 10,
   },
 });
