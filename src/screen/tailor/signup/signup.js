@@ -12,6 +12,8 @@ import Input from '../../../resuseableComponents/generic/input';
 import CustomButton from '../../../resuseableComponents/generic/button';
 import JsonServer from '../../../api/server';
 import axios from 'axios';
+import { Mpurple, Lpurple, White, Red, Dpurple } from '../../../Constants';
+import { Header } from 'react-native-elements';
 export default class signup extends Component {
   constructor(props) {
     super(props);
@@ -52,23 +54,35 @@ export default class signup extends Component {
         <ImageBackground source={{ uri: "https://previews.123rf.com/images/vectorchoice/vectorchoice1605/vectorchoice160500095/57692765-vector-abstract-upholstery-dark-green-background-can-be-used-in-cover-design-book-design-website-bac.jpg" }}
           style={styles.main}>
           <KeyboardAvoidingView style={styles.innerView}>
+            <Header
+              backgroundColor={Dpurple}
+              placement="left"
+              // leftComponent={{ icon: 'menu', color: '#fff' }}
+              centerComponent={{ text: 'TAILOR REGISTRATION', style: { color: White, fontSize: 22 } }}
+            // rightComponent={{ icon: 'home', color: '#fff' }}
+            />
             <Image
-              source={{
-                uri:
-                  'https://logos.textgiraffe.com/logos/logo-name/Gulan-designstyle-summer-m.png',
-              }}
-              style={{ width: '95%', height: 150 }}
+              // source={{
+              //   uri:
+              //     'https://logos.textgiraffe.com/logos/logo-name/Gulan-designstyle-summer-m.png',
+              // }}
+              source={require('../../../media/cover.png')}
+              style={{ width: '100%', height: 150 }}
             />
             <View
               style={{
-                backgroundColor: 'white',
+                backgroundColor: Lpurple,
                 paddingVertical: 10,
-                width: '95%',
+                width: "100%",
+                height: '100%',
                 alignItems: 'center',
+                borderTopRightRadius: 25,
+                borderTopLeftRadius: 25,
+                marginTop: 10
               }}>
-              <Text style={{ fontSize: 26, fontWeight: 'bold' }}>
+              {/* <Text style={{ fontSize: 26, fontWeight: 'bold' }}>
                 Tailor SignUp
-              </Text>
+              </Text> */}
               <Input
                 placeholder="First Name"
                 onChangeText={fname => this.setState({ firstname: fname })}
@@ -110,7 +124,7 @@ export default class signup extends Component {
               />
               <CustomButton buttontext="Register" onPress={() => this.signup()} />
               <Text
-                style={{ marginTop: 20, color: 'blue' }}
+                style={{ marginTop: 20, color: White }}
                 onPress={() => this.props.navigation.navigate('TAILORSIGNIN')}>
                 Don't have an account? Login here
               </Text>
@@ -123,14 +137,14 @@ export default class signup extends Component {
 }
 const styles = StyleSheet.create({
   main: {
-    backgroundColor: 'green',
+    // backgroundColor: 'green',
     flex: 1,
-    paddingVertical: 10,
-    paddingHorizontal: 10,
+    // paddingVertical: 10,
+    // paddingHorizontal: 10,
   },
   innerView: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: Mpurple,
     alignItems: 'center',
     paddingVertical: 10,
   },

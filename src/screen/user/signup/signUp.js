@@ -13,7 +13,8 @@ import Input from '../../../resuseableComponents/generic/input';
 import CustomButton from '../../../resuseableComponents/generic/button';
 import axios from 'axios';
 import jsonserver from "../../../api/server"
-import { Mpurple, Lpurple, White, Red } from '../../../Constants';
+import { Mpurple, Lpurple, White, Red, Dpurple } from '../../../Constants';
+import { Header } from 'react-native-elements';
 export default class signup extends Component {
   constructor(props) {
     super(props);
@@ -56,12 +57,20 @@ export default class signup extends Component {
         <ImageBackground source={{ uri: "https://previews.123rf.com/images/vectorchoice/vectorchoice1605/vectorchoice160500095/57692765-vector-abstract-upholstery-dark-green-background-can-be-used-in-cover-design-book-design-website-bac.jpg" }}
           style={styles.main}>
           <KeyboardAvoidingView style={styles.innerView}>
+            <Header
+              backgroundColor={Dpurple}
+              placement="left"
+              // leftComponent={{ icon: 'menu', color: '#fff' }}
+              centerComponent={{ text: 'USER REGISTERATION', style: { color: White, fontSize: 22 } }}
+            // rightComponent={{ icon: 'home', color: '#fff' }}
+            />
             <Image
-              source={{
-                uri:
-                  'https://logos.textgiraffe.com/logos/logo-name/Gulan-designstyle-summer-m.png',
-              }}
-              style={{ width: "95%", height: 150 }}
+              // source={{
+              //   uri:
+              //     'https://logos.textgiraffe.com/logos/logo-name/Gulan-designstyle-summer-m.png',
+              // }}
+              source={require('../../../media/cover.png')}
+              style={{ width: "100%", height: 150 }}
             />
             <ScrollView
               contentContainerStyle={{
@@ -73,7 +82,7 @@ export default class signup extends Component {
                 borderTopRightRadius: 25,
                 borderTopLeftRadius: 25,
               }}>
-              <Text style={{ fontSize: 26, fontWeight: 'bold', color: White }}>User SignUp</Text>
+              {/* <Text style={{ fontSize: 26, fontWeight: 'bold', color: White }}>User SignUp</Text> */}
               {/* <Input placeholder="Username" /> */}
               <Input
                 placeholder="First Name"

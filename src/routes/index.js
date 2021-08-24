@@ -7,6 +7,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { connect } from 'react-redux';
 import { store } from "../redux/index"
+import { Lpurple } from '../Constants';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -23,6 +24,7 @@ function MyUserTabs() {
 
   return (
     <Tab.Navigator
+
       initialRouteName="Home"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
@@ -43,17 +45,27 @@ function MyUserTabs() {
           // You can return any component that you like here!
           return <Ionicons name={iconName} size={size} color={color} />;
         },
+
       })}
       tabBarOptions={{
-        activeTintColor: 'tomato',
-        inactiveTintColor: 'gray',
-      }}>
-      <Tab.Screen name="Home" component={Screen.HOME} />
+        activeTintColor: 'green',
+        inactiveTintColor: 'white',
+        style: { backgroundColor: Lpurple },
+
+
+      }}
+
+    >
+      <Tab.Screen name="Home" component={Screen.HOME}
+      // options={{
+      //   title: ''
+      // }}
+      />
       <Tab.Screen name="Customize" component={Screen.CUSTOMIZE} />
       {/* <Tab.Screen name="Requests" component={Screen.REQUEST} /> */}
       <Tab.Screen name="History" component={Screen.HISTORY} />
       <Tab.Screen name="Profile" component={Screen.PROFILE} />
-    </Tab.Navigator>
+    </Tab.Navigator >
   );
 
 }
@@ -83,8 +95,8 @@ function MyTailorTabs() {
         },
       })}
       tabBarOptions={{
-        activeTintColor: 'tomato',
-        inactiveTintColor: 'gray',
+        activeTintColor: 'white',
+        inactiveTintColor: 'white',
       }}>
       <Tab.Screen name="Home" component={Screen.TAILORHOME} />
       {/* <Tab.Screen name="Customize" component={Screen.CUSTOMIZE} />

@@ -77,8 +77,19 @@ class suitCard extends Component {
 
   render() {
     return (
-      <View style={{ width: '95%', marginVertical: 10, height: 200, borderWidth: 0.5 }}>
-        <View style={{ width: "100%", height: "70%", backgroundColor: "white" }}>
+      <View style={{
+        width: '95%',
+        marginVertical: 5,
+        height: 470,
+        borderWidth: 0,
+        borderRadius: 25,
+        paddingVertical: 20,
+        paddingHorizontal: 10,
+        overflow: 'hidden',
+        elevation: 10,
+
+      }}>
+        <View style={{ width: "100%", height: "100%", backgroundColor: "white", borderRadius: 25 }}>
           <View style={{ flexDirection: "row", marginVertical: 10, marginLeft: 10 }}>
 
             <Avatar
@@ -113,7 +124,7 @@ class suitCard extends Component {
               uri: this.state.backgroundImageUri
             }}
 
-            style={{ width: "100%", height: "100%" }}
+            style={{ width: "100%", height: 350, borderRadius: 25, marginTop: 20 }}
 
           />
           <TouchableOpacity

@@ -13,7 +13,9 @@ import Input from '../../../resuseableComponents/generic/input';
 import CustomButton from '../../../resuseableComponents/generic/button';
 import JsonServer from '../../../api/server';
 import { connect } from 'react-redux';
+import { Mpurple, Lpurple, White, Red, Dpurple } from '../../../Constants';
 import axios from 'axios';
+import { Header } from 'react-native-elements';
 class login extends Component {
   constructor(props) {
     super(props);
@@ -57,25 +59,37 @@ class login extends Component {
         <ImageBackground source={{ uri: "https://previews.123rf.com/images/vectorchoice/vectorchoice1605/vectorchoice160500095/57692765-vector-abstract-upholstery-dark-green-background-can-be-used-in-cover-design-book-design-website-bac.jpg" }}
           style={styles.main}>
           <KeyboardAvoidingView style={styles.innerView}>
+            <Header
+              backgroundColor={Dpurple}
+              placement="left"
+              // leftComponent={{ icon: 'menu', color: '#fff' }}
+              centerComponent={{ text: 'TAILOR LOGIN', style: { color: White, fontSize: 22 } }}
+            // rightComponent={{ icon: 'home', color: '#fff' }}
+            />
             <Image
-              source={{
-                uri:
-                  'https://logos.textgiraffe.com/logos/logo-name/Gulan-designstyle-summer-m.png',
-              }}
-              style={{ width: '95%', height: 150 }}
+              // source={{
+              //   uri:
+              //     'https://logos.textgiraffe.com/logos/logo-name/Gulan-designstyle-summer-m.png',
+              // }}
+              source={require('../../../media/cover.png')}
+              style={{ width: '100%', height: 150 }}
             />
             <View
               style={{
-                backgroundColor: 'white',
+                backgroundColor: Lpurple,
                 paddingVertical: 10,
-                width: '95%',
+                width: "100%",
+                height: '100%',
                 alignItems: 'center',
+                borderTopRightRadius: 25,
+                borderTopLeftRadius: 25,
+                marginTop: 10
               }}>
-              <Text style={{ fontSize: 26, fontWeight: 'bold' }}>
+              {/* <Text style={{ fontSize: 26, fontWeight: 'bold' }}>
                 Tailor SignIn
-              </Text>
+              </Text> */}
               {this.state.error_message == '' ? null : (
-                <Text style={{ color: 'red' }}>{this.state.error_message}</Text>
+                <Text style={{ color: Red }}>{this.state.error_message}</Text>
               )}
               <Input
                 placeholder="Email"
@@ -88,11 +102,11 @@ class login extends Component {
               />
               <CustomButton buttontext="Login" onPress={() => this.login()} />
               <Text
-                style={{ marginTop: 20, color: 'blue' }}
+                style={{ marginTop: 20, color: White }}
                 onPress={() => this.props.navigation.navigate('TAILORSIGNUP')}>
                 Don't have an account? SignUp here
               </Text>
-              <CustomButton buttontext="Login as User" onPress={() => this.props.navigation.navigate("SIGNIN")} style={{ backgroundColor: "blue" }} />
+              <CustomButton buttontext="Login as User" onPress={() => this.props.navigation.navigate("SIGNIN")} style={{ backgroundColor: Dpurple }} />
 
             </View>
           </KeyboardAvoidingView>
@@ -106,12 +120,12 @@ const styles = StyleSheet.create({
   main: {
     backgroundColor: 'green',
     flexGrow: 1,
-    paddingVertical: 10,
-    paddingHorizontal: 10,
+    // paddingVertical: 10,
+    // paddingHorizontal: 10,
   },
   innerView: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: Mpurple,
     alignItems: 'center',
     paddingVertical: 20,
   },

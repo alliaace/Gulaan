@@ -300,17 +300,17 @@ class home extends Component {
               <CustomButton buttontext="close" onPress={() => this.setState({ modaldecision: false })} />
             </View>
           </Modal>
-          {this.state.tailorPicForSlider === null ? null :
+          {/* {this.state.tailorPicForSlider === null ? null :
             <ImageSlider images={this.state.tailorPicForSlider} />
 
-          }
+          } */}
           <View
             style={{
               flexDirection: 'row',
-              justifyContent: 'space-between',
+              // justifyContent: 'space-between',
               width: '95%',
             }}>
-            <CustomButton
+            {/* <CustomButton
               buttontext="Trending"
               style={{
                 width: '45%',
@@ -329,7 +329,28 @@ class home extends Component {
               }}
               textstyle={{ fontSize: 14 }}
               onPress={() => this.handleRenderStateChangeTailor()}
-            />
+            /> */}
+            <TouchableOpacity
+
+              onPress={() => this.handleRenderStateChangeTrending()}
+            >
+
+              <View style={{ width: 100, height: 50, borderBottomWidth: this.state.trending ? 0.5 : 0, alignItems: 'center' }}
+              >
+                <Text style={{ fontSize: 26, color: this.state.trending ? 'green' : 'black' }}>Trending</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+
+              onPress={() => this.handleRenderStateChangeTailor()}
+            >
+
+              <View style={{ width: 100, height: 50, marginLeft: 10, alignItems: 'center', borderBottomWidth: this.state.tailor ? 0.5 : 0 }}
+              >
+                <Text style={{ fontSize: 26, color: this.state.tailor ? 'green' : 'black' }}>Tailors</Text>
+              </View>
+            </TouchableOpacity>
+
           </View>
           {this.state.tailor && (
             <>
@@ -343,11 +364,12 @@ class home extends Component {
                 style={{
                   width: '95%',
                   paddingVertical: 10,
-                  backgroundColor: 'white',
+                  // backgroundColor: 'pink',
                   marginTop: 20,
                   justifyContent: 'center',
                   alignItems: 'center',
-                  borderWidth: 0.2
+                  // borderWidth: 0.2,
+                  borderRadius: 25,
                 }}>
                 <View
                   style={{
@@ -356,6 +378,7 @@ class home extends Component {
                     height: 60,
                     justifyContent: 'center',
                     paddingHorizontal: 10,
+                    borderRadiust: 25,
                   }}>
                   <TextInput
                     placeholder="Tell us about trending suits!!!!!"
@@ -439,8 +462,8 @@ const styles = StyleSheet.create({
   main: {
     backgroundColor: 'green',
     flexGrow: 1,
-    paddingVertical: 10,
-    paddingHorizontal: 10,
+    // paddingVertical: 10,
+    // paddingHorizontal: 10,
   },
   innerView: {
     flex: 1,

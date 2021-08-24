@@ -72,7 +72,7 @@ class login extends Component {
               //     'https://logos.textgiraffe.com/logos/logo-name/Gulan-designstyle-summer-m.png',
               // }}
               source={require('../../../media/cover.png')}
-              style={{ width: "95%", height: 150 }}
+              style={{ width: "100%", height: 150 }}
             />
             <View
               style={{
@@ -83,6 +83,7 @@ class login extends Component {
                 alignItems: 'center',
                 borderTopRightRadius: 25,
                 borderTopLeftRadius: 25,
+                marginTop: 10
 
               }}>
               {/* <Text style={{ fontSize: 26, fontWeight: 'bold', color: White }}>User SignIn</Text> */}
