@@ -16,7 +16,7 @@ export default class input extends Component {
                     placeholder={this.props.placeholder}
                     style={styles.input}
                     onChangeText={this.props.onChangeText}
-                    placeholderTextColor={White}
+                    placeholderTextColor="black"
                     secureTextEntry={this.props.issecure}
                     keyboardType={this.props.type}
                 />
@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         marginTop: 20,
         paddingLeft: 20,
-        borderColor: White,
-        color: White
+        borderColor: 'black',
+        color: "black"
 
     }
 })

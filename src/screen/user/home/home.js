@@ -226,10 +226,7 @@ class home extends Component {
       },
     };
     ImagePicker.launchImageLibrary(options, response => {
-      let arr = this.state.selectedImages
-      arr.push(response.uri)
 
-      this.setState({ selectedImages: arr })
 
       if (response.didCancel) {
         console.log('User cancelled image picker');
@@ -237,7 +234,11 @@ class home extends Component {
         console.log('ImagePicker Error: ', response.error);
       } else {
         const uri = response.uri;
-        this.setState({ backgroundUri: uri });
+        let arr = this.state.selectedImages
+        arr.push(response.uri)
+
+        this.setState({ selectedImages: arr })
+        // this.setState({ backgroundUri: uri });
       }
     });
   }
@@ -335,7 +336,7 @@ class home extends Component {
               onPress={() => this.handleRenderStateChangeTrending()}
             >
 
-              <View style={{ width: 100, height: 50, borderBottomWidth: this.state.trending ? 0.5 : 0, alignItems: 'center' }}
+              <View style={{ width: 110, height: 50, borderBottomWidth: this.state.trending ? 0.5 : 0, alignItems: 'center' }}
               >
                 <Text style={{ fontSize: 26, color: this.state.trending ? 'green' : 'black' }}>Trending</Text>
               </View>

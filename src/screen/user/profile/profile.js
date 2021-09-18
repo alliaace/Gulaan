@@ -11,6 +11,7 @@ import { template } from '@babel/core';
 import * as ImagePicker from 'react-native-image-picker';
 import jsonserver from '../../../api/server'
 import TailorCard from '../../../resuseableComponents/generic/tailorCard';
+import { Lpurple, Mpurple, White } from '../../../Constants';
 
 class profile extends Component {
     constructor(props) {
@@ -142,10 +143,17 @@ class profile extends Component {
         return (
             <ScrollView contentContainerStyle={styles.main}>
                 <View style={styles.innerView}>
-                    <View style={{ width: "100%", backgroundColor: "pink", height: 200, paddingHorizontal: 20 }}>
+                    <View style={{
+                        width: "100%",
+                        backgroundColor: Lpurple,
+                        height: 200,
+                        paddingHorizontal: 20,
+                        borderTopLeftRadius: 25,
+                        borderTopRightRadius: 25,
+                    }}>
                         <Image source={{ uri: this.state.dp }} style={{ height: 100, width: 100, borderRadius: 100, marginTop: 20, }} />
-                        <Text style={{ fontSize: 32 }}>{(this.props.userdata).first_name} {(this.props.userdata).last_name}</Text>
-                        <Text style={{ fontSize: 16 }}>{(this.props.userdata).email}</Text>
+                        <Text style={{ fontSize: 32, color: White }}>{(this.props.userdata).first_name} {(this.props.userdata).last_name}</Text>
+                        <Text style={{ fontSize: 16, color: White }}>{(this.props.userdata).email}</Text>
                     </View>
                     <View style={{ marginTop: 20 }}>
 
@@ -162,8 +170,8 @@ class profile extends Component {
                     </View>
                 </View>
                 {this.state.applyTab &&
-                    <View style={[{ backgroundColor: "white", width: "100%", height: "100%", position: "absolute", marginLeft: 10, marginTop: 10 }]}>
-                        <View style={{ width: "100%", backgroundColor: "pink", height: 220, paddingHorizontal: 20 }}>
+                    <View style={[{ backgroundColor: White, width: "100%", height: "100%", position: "absolute", marginTop: 10 }]}>
+                        <View style={{ width: "100%", backgroundColor: Lpurple, height: 220, paddingHorizontal: 20, }}>
                             <TouchableOpacity style={{ marginLeft: -10, marginTop: 10 }} onPress={() => this.setState({ applyTab: !this.state.applyTab })}>
                                 <Ionicon name="arrow-back-outline" size={30} />
                             </TouchableOpacity>
@@ -272,15 +280,18 @@ class profile extends Component {
 }
 const styles = StyleSheet.create({
     main: {
-        backgroundColor: "green",
+        backgroundColor: Mpurple,
         flexGrow: 1,
         paddingVertical: 10,
-        paddingHorizontal: 10,
+        // paddingHorizontal: 10,
     },
     innerView: {
         flex: 1,
-        backgroundColor: "white",
+        backgroundColor: White,
         alignItems: "center",
+        borderTopLeftRadius: 25,
+        borderTopRightRadius: 25,
+        marginTop: 10
         // paddingVertical: 20
     }
 })

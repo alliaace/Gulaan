@@ -20,6 +20,7 @@ import Ionicon from "react-native-vector-icons/Ionicons"
 import { connect } from 'react-redux';
 import SearchBar from "../../../resuseableComponents/generic/serachbar"
 import jsonserver from '../../../api/server'
+import { Mpurple } from '../../../Constants';
 
 
 class home extends Component {
@@ -34,13 +35,12 @@ class home extends Component {
     componentDidMount = () => {
         jsonserver.get(`user/all_customizations_of_user/${this.props.userdata._id}`)
             .then((response) => {
-                console.log('================= history ===================');
-                console.log(response.data.data);
-                console.log('====================================');
+
+                alert(JSON.stringify(response.data.data));
                 this.setState({ history: response.data.data })
             })
             .catch((error) => {
-                alert("Something went wrong")
+                // alert(JSON.stringify(error.response))
             })
     };
     refresh() {
@@ -79,16 +79,19 @@ class home extends Component {
 
 const styles = StyleSheet.create({
     main: {
-        backgroundColor: 'green',
+        backgroundColor: Mpurple,
         flexGrow: 1,
         paddingVertical: 10,
-        paddingHorizontal: 10,
+        // paddingHorizontal: 10,
     },
     innerView: {
         flex: 1,
         backgroundColor: 'white',
         alignItems: 'center',
         paddingVertical: 20,
+        borderTopRightRadius: 25,
+        borderTopLeftRadius: 25,
+        marginTop: 10
     },
 });
 const mapStateToProps = state => {

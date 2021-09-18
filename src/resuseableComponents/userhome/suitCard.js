@@ -124,7 +124,7 @@ class suitCard extends Component {
               uri: this.state.backgroundImageUri
             }}
 
-            style={{ width: "100%", height: 350, borderRadius: 25, marginTop: 20 }}
+            style={{ width: "100%", height: 350, borderRadius: 25, marginTop: 20, borderBottomLeftRadius: 25 }}
 
           />
           <TouchableOpacity

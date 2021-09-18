@@ -8,6 +8,8 @@ import {
     FlatList,
     Image,
     TouchableOpacity,
+    Platform,
+    PermissionsAndroid,
 } from 'react-native';
 import ImageSlider from '../../../resuseableComponents/generic/ImageSlider';
 import CustomButton from '../../../resuseableComponents/generic/button';
@@ -22,6 +24,13 @@ import jsonserver from '../../../api/server'
 import { resolvePreset } from '@babel/core';
 import Modal from 'react-native-modal';
 import Input from '../../../resuseableComponents/generic/input'
+import { Mpurple, White } from '../../../Constants';
+import PhotoEditor from 'react-native-photo-editor'
+import RNFetchBlob from 'react-native-fetch-blob';
+
+
+
+
 
 
 class home extends Component {
@@ -37,7 +46,7 @@ class home extends Component {
             // selectedImages: ["https://www.macmillandictionaryblog.com/wp-content/uploads/2018/04/cloud--1024x667.jpg"],
             // selectedImages: ["file:///data/user/0/com.gulaan/cache/rn_image_picker_lib_temp_a6cc6cd5-b633-4fae-afaf-438e1a1be423.jpg"],
             // selectedImages: ["file:///data/user/0/com.gulaan/cache/rn_image_picker_lib_temp_16ea7de7-bf36-4b97-8ccb-cfb48dcd4825.jpg", "file:///data/user/0/com.gulaan/cache/rn_image_picker_lib_temp_8c4f00c2-5727-4ceb-b26a-e7047fcc9687.jpg"],
-            selectedImages: null,
+            selectedImages: [],
 
             postDiscription: "",
             postsUploadedByMe: "no",
@@ -68,22 +77,59 @@ class home extends Component {
             },
         };
         ImagePicker.launchImageLibrary(options, response => {
-            let arr = null
-            if (this.state.selectedImages != null)
-                arr = this.state.selectedImages
-            else
-                arr = []
-            arr.push(response.uri)
 
-            this.setState({ selectedImages: arr })
+            // let arr = null
+            // if (this.state.selectedImages != null)
+            //     arr = this.state.selectedImages
+            // else { }
+            // arr = []
+            // arr.push(response.uri)
+
+            // RNFetchBlob.fs.stat(response.uri)
+            //     .then((stats) => {
+            //         // photoToEdit = c
+            //         PhotoEditor.Edit({
+            //             path: stats.path,
+            //             onDone: (e) => { console.log('done'); console.log(e) }
+            //         });
+            //     })
+            //     .catch((err) => { })
+
+
+
+
+            // this.setState({ selectedImages: arr })
 
             if (response.didCancel) {
                 console.log('User cancelled image picker');
             } else if (response.error) {
                 console.log('ImagePicker Error: ', response.error);
             } else {
-                const uri = response.uri;
-                this.setState({ backgroundUri: uri });
+                let arr = this.state.selectedImages
+                RNFetchBlob.fs.stat(response.uri)
+                    .then((stats) => {
+                        // photoToEdit = c
+                        PhotoEditor.Edit({
+                            path: stats.path,
+                            onDone: (e) => {
+                                console.log('done');
+                                console.log(e);
+                                //  arr.push(e) 
+                                this.setState({ selectedImages: [...this.state.selectedImages, "file://" + e] })
+
+                            }
+                        });
+                    })
+                    .catch((err) => { })
+
+
+
+
+
+
+                // const uri = response.uri;
+                // arr.push(uri)
+                this.setState({ selectedImages: arr })
             }
         });
     }
@@ -123,13 +169,26 @@ class home extends Component {
                 })
         }
     }
+    componentDidMount() {
+
+        PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE)
+
+
+        // PhotoEditor.Edit({
+        //     // path: "/storage/emulated/0/Pictures/Screenshots/Screenshot_20210917-234854.jpg"
+        //     path: "content://com.android.providers.media.documents/document/image%3A24"
+        // });
+    }
 
     render() {
         return (
             <ScrollView contentContainerStyle={styles.main}>
+                {/* <Text style={{ fontSize: 20, color: 'white' }}>{JSON.stringify(Platform)}</Text> */}
                 <View style={styles.innerView}>
 
                     <Text style={{ fontSize: 26 }}>Customize your Suit</Text>
+
+
 
                     <View
                         style={{
@@ -233,6 +292,7 @@ class home extends Component {
                     </Modal>
 
                 </View>
+
             </ScrollView>
         );
     }
@@ -240,16 +300,19 @@ class home extends Component {
 
 const styles = StyleSheet.create({
     main: {
-        backgroundColor: 'green',
+        backgroundColor: Mpurple,
         flexGrow: 1,
         paddingVertical: 10,
-        paddingHorizontal: 10,
+        // paddingHorizontal: 10,
     },
     innerView: {
         flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: White,
         alignItems: 'center',
         paddingVertical: 20,
+        borderTopLeftRadius: 25,
+        borderTopRightRadius: 25,
+        marginTop: 10
     },
 });
 const mapStateToProps = state => {
