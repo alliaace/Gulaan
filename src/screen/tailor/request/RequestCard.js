@@ -16,22 +16,31 @@ export default class RequestCard extends Component {
     acceptRequest() {
         alert(this.props.data._id)
     }
-    creditCardInformation(that) {
-        Alert.alert(
-            "",
-            "My Alert Msg",
-            [
-                {
-                    text: "Ok",
-                    onPress: () => { that.setState({ openModal: !that.state.openModal }); that.acceptRequest() },
-                    style: "cancel",
-                },
-            ],
-
-        );
+    async creditCardInformation() {
+        this.toggleModal()
+        // alert(this.state.status == "pending" ? 'accepted' : this.state.status == 'Mark Complete' && "completed")
+        const res = await jsonserver.put(`tailor/update_bidding_status/${this.props.data._id}`, {
+            status: this.state.status == "pending" ? 'accepted' : this.state.status == 'Mark Complete' && "completed",
+            card_number: this.state.cardNumber,
+            exp_month: this.state.EM,
+            exp_year: this.state.EY,
+            cvc: this.state.CVC
+        })
+        if (this.state.status == "Mark Complete")
+            this.setState({ status: "Completed" })
+        if (this.state.status == "Accept")
+            this.setState({ status: "Mark Complete" })
     }
     toggleModal() {
         this.setState({ openModal: !this.state.openModal })
+    }
+    async cancelRequest() {
+
+        const res = await jsonserver.put(`tailor/update_bidding_status/${this.props.data._id}`, {
+            status: 'rejected'
+        })
+        if (res.data.success)
+            this.setState({ cancel: 'Canceled' })
     }
     render() {
         var data = this.props.data

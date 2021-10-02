@@ -116,14 +116,14 @@ function Routes() {
         screenOptions={{
           headerShown: false,
         }}
-        initialRouteName="SIGNIN">
+        initialRouteName="MAP">
         <Stack.Screen name="SIGNIN" component={Screen.SIGNIN} />
         <Stack.Screen name="SIGNUP" component={Screen.SIGNUP} />
         <Stack.Screen name="TAILORSIGNIN" component={Screen.TAILORSIGNIN} />
         <Stack.Screen name="TAILORSIGNUP" component={Screen.TAILORSIGNUP} />
         <Stack.Screen name="USERDASHBOARD" component={MyUserTabs} />
         <Stack.Screen name="TAILORDASHBOARD" component={MyTailorTabs} />
-        {/* <Stack.Screen name="MAP" component={Screen.MAP} /> */}
+        <Stack.Screen name="MAP" component={Screen.MAP} />
       </Stack.Navigator>
     </NavigationContainer>
   );

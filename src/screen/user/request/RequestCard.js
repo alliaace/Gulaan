@@ -15,8 +15,9 @@ export default class RequestCard extends Component {
             EM: 9,
             EY: 2022,
             CVC: 314,
-            status: this.props.data.status == 'pending' ? 'Accept' : 'Completed',
-            cancel: 'Cancel'
+            status: this.props.data.status == 'pending' ? 'Accept' : this.props.data.status == 'accepted' ? "Mark Complete" : "Completed",
+            cancel: 'Cancel',
+            refreshing: false
 
         }
 
@@ -25,54 +26,37 @@ export default class RequestCard extends Component {
     acceptRequest() {
         alert(this.props.data._id)
     }
-    creditCardInformation() {
+    async creditCardInformation() {
         this.toggleModal()
-        setTimeout(() => {
-            this.setState({ status: 'Accepted' })
-        }, 1000);
-        // jsonserver.put(`tailor/update_bidding_status/${this.props.data._id}`, {
-        //     status: this.props.data.status == 'pending' ? 'accepted' : 'completed',
-        //     card_number: this.state.cardNumber,
-        //     exp_month: this.state.EM,
-        //     exp_year: this.state.EY,
-        //     cvc: this.state.CVC
-        // })
-        //     .then(res => {
-        //         alert(JSON.stringify(res.data))
-        //     })
-        //     .catch(err => alert((JSON.stringify(err))))
-        // Alert.alert(
-        //     "",
-        //     "My Alert Msg",
-        //     [
-        //         {
-        //             text: "Ok",
-        //             onPress: () => { that.setState({ openModal: !that.state.openModal }); that.acceptRequest() },
-        //             style: "cancel",
-        //         },
-        //     ],
-
-        // );
+        // alert(this.state.status == "pending" ? 'accepted' : this.state.status == 'Mark Complete' && "completed")
+        const res = await jsonserver.put(`tailor/update_bidding_status/${this.props.data._id}`, {
+            status: this.state.status == "pending" ? 'accepted' : this.state.status == 'Mark Complete' && "completed",
+            card_number: this.state.cardNumber,
+            exp_month: this.state.EM,
+            exp_year: this.state.EY,
+            cvc: this.state.CVC
+        })
+        if (this.state.status == "Mark Complete")
+            this.setState({ status: "Completed" })
+        if (this.state.status == "Accept")
+            this.setState({ status: "Mark Complete" })
     }
     toggleModal() {
         this.setState({ openModal: !this.state.openModal })
     }
-    cancelRequest() {
-        // this.toggleModal()
-        setTimeout(() => {
-            this.setState({ cancel: 'Canceled' })
-        }, 1000);
+    async cancelRequest() {
 
-        // const res = await jsonserver.put(`tailor/update_bidding_status/${this.props.data._id}`)
-        // alert(JSON.stringify(res))
-        // .then((res) => alert(res))
-        // .catch(err => alert(err))
+        const res = await jsonserver.put(`tailor/update_bidding_status/${this.props.data._id}`, {
+            status: 'rejected'
+        })
+        if (res.data.success)
+            this.setState({ cancel: 'Canceled' })
     }
     render() {
         var data = this.props.data
         return (
             <View style={{ width: '95%', backgroundColor: White, marginVertical: 10, borderWidth: 0.5 }}>
-                {/* <Text>{JSON.stringify(data)}</Text> */}
+                {/* <Text>{JSON.stringify(this.state.status)}</Text> */}
                 <Modal isVisible={this.state.openModal} onBackdropPress={this.toggleModal.bind(this)}>
                     <View style={{ backgroundColor: White, paddingHorizontal: 10, paddingBottom: 20 }}>
                         <Text style={{ fontSize: 24 }}>Account Information before requesting</Text>
@@ -89,7 +73,7 @@ export default class RequestCard extends Component {
 
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Image source={{ uri: data.tailor.profile_photo }} style={{ height: 100, width: 100 }} />
-                    <View style={{ width: '55%', marginLeft: 10 }}>
+                    <View style={{ width: '50%', marginLeft: 10 }}>
                         <Text>{data.tailor.first_name} {data.tailor.last_name}</Text>
                         <Text>{data.tailor.address}</Text>
                         {

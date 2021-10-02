@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, Dimensions } from 'react-native';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import { ScrollView, TouchableOpacity, RefreshControl } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
 import jsonserver from '../../../api/server'
 import RequestCard from './RequestCard';
@@ -11,23 +11,39 @@ class request extends Component {
         this.state = {
             allRequestDataOfTailor: [],
             sentrequest: false,
-            receiveRequest: true
+            receiveRequest: true,
+            refreshing: false
         };
     }
-    componentDidMount() {
-        // alert(this.props.tailordata._id)
+    callApi() {
+
         jsonserver.get(`user/get_all_biding/${this.props.userdata._id}`)
-            .then(res =>
-                this.setState({ allRequestDataOfTailor: res.data.data })
+            .then(res => {
+                if (res.data.data)
+                    this.setState({ allRequestDataOfTailor: res.data.data })
+            }
                 // alert(JSON.stringify(res.data.data[0]))
             )
             .catch(err => alert(JSON.stringify(err)))
+    }
+    componentDidMount() {
+        // alert(this.props.tailordata._id)
+        this.callApi()
 
     }
 
     render() {
         return (
-            <ScrollView contentContainerStyle={{ flexGrow: 1, alignItems: 'center' }}>
+            <ScrollView contentContainerStyle={{ flexGrow: 1, alignItems: 'center' }}
+            // refreshControl={
+            //     <RefreshControl
+            //         refreshing={this.state.refreshing}
+            //         onRefresh={() => this.refresh()}
+            //     />
+            // }
+            // refreshControl={
+            // }
+            >
                 <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between', marginTop: 20 }}>
                     <TouchableOpacity style={{ borderBottomWidth: 1, height: 40, width: (Dimensions.get('window').width / 2), alignItems: 'center', borderColor: this.state.receiveRequest ? "green" : 'black' }} onPress={() => this.setState({ receiveRequest: true, sentrequest: false })}>
                         <Text style={{ fontSize: 18, color: this.state.receiveRequest ? "green" : 'black' }}>Incomming</Text>
@@ -49,7 +65,7 @@ class request extends Component {
                 {
                     this.state.sentrequest &&
                     this.state.allRequestDataOfTailor.map(x =>
-                        !x.post &&
+                        (!x.post && x.status != 'rejected') &&
                         <RequestCard data={x} />
                     )
                 }
