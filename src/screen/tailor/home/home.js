@@ -20,6 +20,7 @@ import Ionicon from "react-native-vector-icons/Ionicons"
 import { connect } from 'react-redux';
 import SearchBar from "../../../resuseableComponents/generic/serachbar"
 import jsonserver from '../../../api/server'
+import { Mpurple } from '../../../Constants';
 
 
 class home extends Component {
@@ -82,7 +83,7 @@ class home extends Component {
 
       })
       .catch((error) => {
-        alert("Something went wrong")
+        alert("Something went wrong customization")
       })
   }
   componentDidMount = () => {
@@ -124,7 +125,7 @@ class home extends Component {
         this.setState({ allCustomSuitsByUsers: response.data.data })
       })
       .catch((error) => {
-        alert("Something went wrong")
+        // alert("Something went wrong customization")
       })
 
 
@@ -230,7 +231,7 @@ class home extends Component {
         />}
       >
         <View style={styles.innerView}>
-          {this.state.PicForSlider !== null ? <ImageSlider images={this.state.PicForSlider} /> : null}
+          {this.state.PicForSlider !== null ? <ImageSlider images={this.state.PicForSlider.slice(3)} /> : null}
           {/* <Text>{JSON.stringify(this.state.PicForSlider)}</Text> */}
           <View
             style={{
@@ -338,14 +339,14 @@ class home extends Component {
                   />
                 </View>
               </View>
-              {this.props.userallposts.reverse().map((item) => <SuitCard item={item} heartState={item.heartState} />)}
+              {this.props.userallposts.reverse().map((item) => <SuitCard item={item} heartState={item?.heartState} />)}
 
             </>
           )}
           {this.state.tailor && (
             <>
               {/* <Text>this is here when you need</Text> */}
-              {this.state.allCustomSuitsByUsers.map((item) => <SuitCard item={item} heartState={item.heartState} />)}
+              {this.state.allCustomSuitsByUsers.map((item) => <SuitCard item={item} heartState={item?.heartState} customCardForTailor={true} />)}
 
             </>
           )}
@@ -357,10 +358,10 @@ class home extends Component {
 
 const styles = StyleSheet.create({
   main: {
-    backgroundColor: 'green',
+    backgroundColor: Mpurple,
     flexGrow: 1,
-    paddingVertical: 10,
-    paddingHorizontal: 10,
+    // paddingVertical: 10,
+    // paddingHorizontal: 10,
   },
   innerView: {
     flex: 1,

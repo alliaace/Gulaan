@@ -16,11 +16,8 @@ class request extends Component {
     }
     componentDidMount() {
         // alert(this.props.tailordata._id)
-        jsonserver.get(`user/get_all_biding/${this.props.userdata._id}`)
-            .then(res =>
-                this.setState({ allRequestDataOfTailor: res.data.data })
-                // alert(JSON.stringify(res.data.data[0]))
-            )
+        jsonserver.get(`tailor/get_all_biding/${this.props.tailordata._id}`)
+            .then(res => this.setState({ allRequestDataOfTailor: res.data.data }))
             .catch(err => alert(JSON.stringify(err)))
 
     }
@@ -42,14 +39,14 @@ class request extends Component {
                 {
                     this.state.receiveRequest &&
                     this.state.allRequestDataOfTailor.map(x =>
-                        x.post &&
+                        !x.post &&
                         <RequestCard data={x} incomming={true} />
                     )
                 }
                 {
                     this.state.sentrequest &&
                     this.state.allRequestDataOfTailor.map(x =>
-                        !x.post &&
+                        x.post &&
                         <RequestCard data={x} />
                     )
                 }

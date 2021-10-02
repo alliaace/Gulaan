@@ -5,6 +5,12 @@ import { View, Text, ImageBackground, TouchableOpacity, Image } from 'react-nati
 import Ionicon from "react-native-vector-icons/Ionicons"
 import { connect } from 'react-redux';
 import { Avatar } from 'react-native-elements';
+import ThemedListItem from 'react-native-elements/dist/list/ListItem';
+import Modal from 'react-native-modal'
+import { White } from '../../Constants';
+import Input from '../generic/input'
+import CustomButton from '../generic/button'
+import jsonserver from '../../api/server'
 
 class suitCard extends Component {
   constructor(props) {
@@ -13,7 +19,11 @@ class suitCard extends Component {
       backgroundImageUri: "https://lh3.googleusercontent.com/proxy/h7gPZ0xAS7Jq-n1q4torwcsSbCgInwqHTNRSsq-FFanmfQ1Ns560TdOqwZq97lL3gG1z8ttXE47IpFJ2lsM24YWyLtos25bZ7Fc1I6y7WR6hBFPku-_lmm7D-hK5Pp5zCTC2DOv0jQgvqtQOg85sis1pInQXBSLeXA",
       data: [],
       heartState: this.props.heartState,
-      date: ""
+      date: "",
+      openModal: false,
+      amount: 0,
+      days: 0,
+      request: false
     };
 
   }
@@ -74,6 +84,47 @@ class suitCard extends Component {
 
     }
   }
+  _RenderModal = () => {
+    return (
+      <Modal isVisible={this.state.openModal} onBackdropPress={this.toggleModal}>
+        <View style={{ backgroundColor: White, paddingHorizontal: 10, paddingBottom: 20 }}>
+          <Text style={{ fontSize: 26 }}>Information before requesting</Text>
+          <Input placeholder="Amount you will charge" onChangeText={(data) => this.setState({ amount: data })} style={{ width: '100%' }} type="numeric" />
+          <Input placeholder="Days you will take" onChangeText={(data) => this.setState({ days: data })} style={{ width: '100%' }} type="numeric" />
+          {/* <Input placeholder="Expiry Month" onChangeText={(data) => this.setState({ length: data })} style={{ width: '100%' }} />
+          <Input placeholder="Expiry Year" onChangeText={(data) => this.setState({ length: data })} style={{ width: '100%' }} /> */}
+          <CustomButton buttontext="Request" style={{ width: '100%' }} onPress={this.requestAUser.bind(this)} />
+        </View>
+      </Modal>
+    )
+  }
+  toggleModal = () => {
+    this.setState({ openModal: !this.state.openModal })
+  }
+  requestAUser = () => {
+    // alert(this.state.amount + ' ' + this.state.days)
+    this.toggleModal()
+    if (this.state.amount == "" || this.state.days == "") {
+      alert("Amount and days both must be filled before requesting")
+      return
+    }
+    // this.setState({ request: !this.state.request })
+    // this.toggleModal()
+
+    jsonserver.post('tailor/bidingRequest', {
+
+      post_id: this.state.data._id,
+      tailor_id: this.props.tailordata._id,
+      user_id: this.state.data.user_id,
+      amount: this.state.amount,
+      days: this.state.days
+
+    }).then(res => {
+      this.setState({ request: !this.state.request })
+    })
+      .catch(err => this.setState({ request: !this.state.request }))
+  }
+
 
   render() {
     return (
@@ -89,6 +140,9 @@ class suitCard extends Component {
         elevation: 10,
 
       }}>
+        {/* <Text style={{ fontSize: 20 }}>{JSON.stringify(this.props.tailordata._id)}</Text> */}
+        {/* <Text>{console.log(this.props.item.images[0])}</Text> */}
+        <this._RenderModal />
         <View style={{ width: "100%", height: "100%", backgroundColor: "white", borderRadius: 25 }}>
           <View style={{ flexDirection: "row", marginVertical: 10, marginLeft: 10 }}>
 
@@ -101,16 +155,27 @@ class suitCard extends Component {
             />
             <View>
               <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 2 }}>
-                <Text style={{ marginLeft: 10, color: "silver" }}>
+                <Text style={{ marginLeft: 10, color: "silver", width: '68%' }}>
                   {this.state.data.first_name} {this.state.data.last_name}
                 </Text>
+                {this.props.customCardForTailor &&
+                  <TouchableOpacity onPress={this.toggleModal}>
+                    <Text style={{ color: 'blue' }}>
+                      {!this.state.request ?
+                        "Request"
+                        :
+                        "Requested"
+                      }
+                    </Text>
+                  </TouchableOpacity>
+                }
               </View>
               <Text style={{ color: "silver", marginLeft: 10 }}>{moment(this.state.data.date).fromNow()}</Text>
             </View>
           </View>
           <Text
             style={{
-              width: "100%",
+              width: "95%",
 
               marginLeft: 10,
               fontSize: 16
@@ -121,7 +186,7 @@ class suitCard extends Component {
           </Text>
           <Image
             source={{
-              uri: this.state.backgroundImageUri
+              uri: this.props.item?.images[0]
             }}
 
             style={{ width: "100%", height: 350, borderRadius: 25, marginTop: 20, borderBottomLeftRadius: 25 }}
@@ -148,6 +213,7 @@ const mapStateToProps = state => {
     userdata: state.userdata,
     userAllFavoriteData: state.userfavsuit,
     userallposts: state.userallposts,
+    tailordata: state.tailordata
   }
 }
 const mapDispatchToProps = dispatch => {

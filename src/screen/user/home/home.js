@@ -9,6 +9,7 @@ import {
   Image,
   TouchableOpacity,
   RefreshControl,
+  // Alert,
 } from 'react-native';
 import ImageSlider from '../../../resuseableComponents/generic/ImageSlider';
 import CustomButton from '../../../resuseableComponents/generic/button';
@@ -81,7 +82,7 @@ class home extends Component {
         this.props.set_user_all_fav_tailor(response.data.data[0].favorite_tailors)
         jsonserver
           .get(
-            'user/get_all_tailors',
+            `user/get_all_tailors/${this.props.userdata._id}`,
           )
           .then(response => {
             var temp = this.props.userfavtailor
@@ -159,7 +160,7 @@ class home extends Component {
         this.props.set_user_all_fav_tailor(response.data.data[0].favorite_tailors)
         jsonserver
           .get(
-            'user/get_all_tailors',
+            `user/get_all_tailors/${this.props.userdata._id}`,
           )
           .then(response => {
             var temp = this.props.userfavtailor
@@ -259,7 +260,20 @@ class home extends Component {
       formdata.append("description", this.state.postDiscription)
       jsonserver.post(`user/trend_upload/${userdata._id}`, formdata)
         .then((response) => {
+          // Alert.alert(
+          //   // "Alert Title",
+          //   "Trend Posted Succesfully",
+          //   [
+          //     // {
+          //     //   text: "Cancel",
+          //     //   onPress: () => console.log("Cancel Pressed"),
+          //     //   style: "cancel"
+          //     // },
+          //     { text: "OK", onPress: () => console.log("OK Pressed") }
+          //   ]
+          // );
           alert("trend posted")
+          this.setState({ postDiscription: "", selectedImages: [] })
           let arr = []
           arr.push(response.data.data)
           this.props.userallposts.map((x) => arr.push(x))
@@ -294,6 +308,7 @@ class home extends Component {
           onRefresh={() => this.refresh()}
         />}
       >
+        {/* <Text>{JSON.stringify(this.state.tailordata[0])}</Text> */}
         <View style={styles.innerView}>
           <Modal isVisible={this.state.modaldecision}>
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
@@ -356,7 +371,7 @@ class home extends Component {
           {this.state.tailor && (
             <>
               <SearchBar onChangeText={(a) => this.searchTailor(a)} />
-              {this.state.tailordata.map((x) => <TailorCard item={x} onPress={() => this.setState({ modalData: x, modaldecision: true })} heartState={x.heartState} canFav={true} />)}
+              {this.state.tailordata.map((x) => <TailorCard item={x.data} onPress={() => this.setState({ modalData: x, modaldecision: true })} heartState={x.heartState} canFav={true} requested={x.requested} />)}
             </>
           )}
           {this.state.trending && (
@@ -446,7 +461,7 @@ class home extends Component {
                   item.heartState === "heart" ? <SuitCard item={item} heartState="heart" canFav={true} /> : <SuitCard item={item} heartState="heart-outline" canFav={true} />
 
                 ) :
-                this.state.postsUploadedByMe.map((item) =>
+                this.state.postsUploadedByMe.reverse().map((item) =>
                   item.heartState === "heart" ? <SuitCard item={item} heartState="heart" canFav={true} /> : <SuitCard item={item} heartState="heart-outline" canFav={true} />
 
                 )

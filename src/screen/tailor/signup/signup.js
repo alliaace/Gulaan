@@ -54,7 +54,7 @@ export default class signup extends Component {
         <ImageBackground source={{ uri: "https://previews.123rf.com/images/vectorchoice/vectorchoice1605/vectorchoice160500095/57692765-vector-abstract-upholstery-dark-green-background-can-be-used-in-cover-design-book-design-website-bac.jpg" }}
           style={styles.main}>
           <KeyboardAvoidingView style={styles.innerView}>
-            <Header
+            {/* <Header
               backgroundColor={Dpurple}
               placement="left"
               // leftComponent={{ icon: 'menu', color: '#fff' }}
@@ -68,17 +68,18 @@ export default class signup extends Component {
               // }}
               source={require('../../../media/cover.png')}
               style={{ width: '100%', height: 150 }}
-            />
+            /> */}
+            <Text style={{ color: White, fontSize: 36, fontWeight: 'bold' }}>Tailor Register</Text>
             <View
               style={{
-                backgroundColor: Lpurple,
+                backgroundColor: White,
                 paddingVertical: 10,
                 width: "100%",
                 height: '100%',
                 alignItems: 'center',
                 borderTopRightRadius: 25,
                 borderTopLeftRadius: 25,
-                marginTop: 10
+                marginTop: 70
               }}>
               {/* <Text style={{ fontSize: 26, fontWeight: 'bold' }}>
                 Tailor SignUp
@@ -124,7 +125,7 @@ export default class signup extends Component {
               />
               <CustomButton buttontext="Register" onPress={() => this.signup()} />
               <Text
-                style={{ marginTop: 20, color: White }}
+                style={{ marginTop: 20, }}
                 onPress={() => this.props.navigation.navigate('TAILORSIGNIN')}>
                 Don't have an account? Login here
               </Text>

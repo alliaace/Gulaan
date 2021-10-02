@@ -72,7 +72,7 @@ class login extends Component {
           password: this.state.password,
         })
         .then(response => {
-          // alert(JSON.stringify(response.data));
+          console.log(response.data);
           this.props.setUserData((response.data.data));
           this.props.navigation.navigate('USERDASHBOARD');
         })
@@ -122,10 +122,11 @@ class login extends Component {
               <Input
                 placeholder="Password"
                 onChangeText={upass => this.setState({ password: upass })}
+                issecure={true}
               />
               <CustomButton buttontext="Login" onPress={() => this.login()} />
               <Text
-                style={{ marginTop: 20, color: White }}
+                style={{ marginTop: 20, }}
                 onPress={() => this.props.navigation.navigate('SIGNUP')}>
                 Don't have an account? SignUp here
               </Text>

@@ -62,7 +62,7 @@ function MyUserTabs() {
       // }}
       />
       <Tab.Screen name="Customize" component={Screen.CUSTOMIZE} />
-      {/* <Tab.Screen name="Requests" component={Screen.REQUEST} /> */}
+      <Tab.Screen name="Requests" component={Screen.REQUEST} />
       <Tab.Screen name="History" component={Screen.HISTORY} />
       <Tab.Screen name="Profile" component={Screen.PROFILE} />
     </Tab.Navigator >
@@ -95,13 +95,14 @@ function MyTailorTabs() {
         },
       })}
       tabBarOptions={{
-        activeTintColor: 'white',
+        activeTintColor: 'green',
         inactiveTintColor: 'white',
+        style: { backgroundColor: Lpurple },
       }}>
       <Tab.Screen name="Home" component={Screen.TAILORHOME} />
-      {/* <Tab.Screen name="Customize" component={Screen.CUSTOMIZE} />
-      <Tab.Screen name="Requests" component={Screen.REQUEST} />
-      <Tab.Screen name="History" component={Screen.HISTORY} /> */}
+      <Tab.Screen name="Customize" component={Screen.CUSTOMIZE} />
+      <Tab.Screen name="Requests" component={Screen.TAILORREQUEST} />
+      <Tab.Screen name="History" component={Screen.HISTORY} />
       <Tab.Screen name="Profile" component={Screen.TAILORPROFILE} />
     </Tab.Navigator>
   );
@@ -122,6 +123,7 @@ function Routes() {
         <Stack.Screen name="TAILORSIGNUP" component={Screen.TAILORSIGNUP} />
         <Stack.Screen name="USERDASHBOARD" component={MyUserTabs} />
         <Stack.Screen name="TAILORDASHBOARD" component={MyTailorTabs} />
+        {/* <Stack.Screen name="MAP" component={Screen.MAP} /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

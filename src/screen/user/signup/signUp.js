@@ -57,30 +57,32 @@ export default class signup extends Component {
         <ImageBackground source={{ uri: "https://previews.123rf.com/images/vectorchoice/vectorchoice1605/vectorchoice160500095/57692765-vector-abstract-upholstery-dark-green-background-can-be-used-in-cover-design-book-design-website-bac.jpg" }}
           style={styles.main}>
           <KeyboardAvoidingView style={styles.innerView}>
-            <Header
+            {/* <Header
               backgroundColor={Dpurple}
               placement="left"
               // leftComponent={{ icon: 'menu', color: '#fff' }}
               centerComponent={{ text: 'USER REGISTERATION', style: { color: White, fontSize: 22 } }}
             // rightComponent={{ icon: 'home', color: '#fff' }}
-            />
-            <Image
+            /> */}
+            {/* <Image
               // source={{
               //   uri:
               //     'https://logos.textgiraffe.com/logos/logo-name/Gulan-designstyle-summer-m.png',
               // }}
               source={require('../../../media/cover.png')}
               style={{ width: "100%", height: 150 }}
-            />
+            /> */}
+            <Text style={{ color: White, fontSize: 36, fontWeight: 'bold' }}>User Register</Text>
             <ScrollView
               contentContainerStyle={{
-                backgroundColor: Lpurple,
+                backgroundColor: White,
                 paddingVertical: 10,
                 width: Dimensions.get('screen').width,
                 height: '100%',
                 alignItems: 'center',
                 borderTopRightRadius: 25,
                 borderTopLeftRadius: 25,
+                marginTop: 70
               }}>
               {/* <Text style={{ fontSize: 26, fontWeight: 'bold', color: White }}>User SignUp</Text> */}
               {/* <Input placeholder="Username" /> */}
@@ -117,7 +119,7 @@ export default class signup extends Component {
 
               <CustomButton buttontext="Register" onPress={() => this.signup()} />
               <Text
-                style={{ marginTop: 20, color: White }}
+                style={{ marginTop: 20, }}
                 onPress={() => this.props.navigation.navigate('SIGNIN')}>
                 Have an account? Login here
               </Text>

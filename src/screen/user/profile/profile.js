@@ -173,22 +173,22 @@ class profile extends Component {
                     <View style={[{ backgroundColor: White, width: "100%", height: "100%", position: "absolute", marginTop: 10 }]}>
                         <View style={{ width: "100%", backgroundColor: Lpurple, height: 220, paddingHorizontal: 20, }}>
                             <TouchableOpacity style={{ marginLeft: -10, marginTop: 10 }} onPress={() => this.setState({ applyTab: !this.state.applyTab })}>
-                                <Ionicon name="arrow-back-outline" size={30} />
+                                <Ionicon name="arrow-back-outline" size={30} color={White} />
                             </TouchableOpacity>
                             <TouchableOpacity style={{ alignSelf: "center" }} onPress={() => this.pickImage()}>
                                 <Image source={{ uri: this.state.dp }} style={{ height: 100, width: 100, borderRadius: 100, marginTop: 0, resizeMode: 'stretch' }} />
                             </TouchableOpacity>
                             <View style={{ flexDirection: 'row', justifyContent: "space-between", alignItems: "center", height: 50, }}>
-                                <Text style={{ fontSize: 32 }}>{this.state.first_name} {this.state.last_name}</Text>
+                                <Text style={{ fontSize: 32, color: White }}>{this.state.first_name} {this.state.last_name}</Text>
                                 {this.state.myAccount
                                     &&
                                     <CustomButton style={{ width: 90 }} buttontext="Save" onPress={() => this.updateUserData()} />
                                 }
                             </View>
-                            <Text style={{ fontSize: 16 }}>{(this.props.userdata).email}</Text>
+                            <Text style={{ fontSize: 16, color: White }}>{(this.props.userdata).email}</Text>
                         </View>
                         {this.state.myAccount &&
-                            (<ScrollView contentContainerStyle={{ marginTop: 10, alignItems: 'center' }}>
+                            (<ScrollView contentContainerStyle={{ marginTop: 10, alignItems: 'center', paddingBottom: 20 }}>
                                 <Text style={{ width: "90%", fontSize: 18, marginVertical: 10 }}>
                                     First Name
                                 </Text>

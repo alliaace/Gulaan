@@ -10,6 +10,7 @@ import {
     TouchableOpacity,
     Platform,
     PermissionsAndroid,
+    KeyboardAvoidingView,
 } from 'react-native';
 import ImageSlider from '../../../resuseableComponents/generic/ImageSlider';
 import CustomButton from '../../../resuseableComponents/generic/button';
@@ -134,7 +135,11 @@ class home extends Component {
         });
     }
     uploadPost() {
-        alert(JSON.stringify(this.state))
+
+        // if (this.state.postDiscription == "" || this.state.length == "" || this.state.waist == "" || this.state.chest == "" || this.state.shoulder == "" || this.state.seleves == "") {
+        //     alert("All fileds Must be filled")
+        //     return
+        // }
         var userdata = (this.props.userdata)
         if (this.state.selectedImages == "") {
             alert("Must select atleast one picture.")
@@ -184,7 +189,7 @@ class home extends Component {
         return (
             <ScrollView contentContainerStyle={styles.main}>
                 {/* <Text style={{ fontSize: 20, color: 'white' }}>{JSON.stringify(Platform)}</Text> */}
-                <View style={styles.innerView}>
+                <KeyboardAvoidingView style={styles.innerView}>
 
                     <Text style={{ fontSize: 26 }}>Customize your Suit</Text>
 
@@ -291,7 +296,7 @@ class home extends Component {
                         </View>
                     </Modal>
 
-                </View>
+                </KeyboardAvoidingView>
 
             </ScrollView>
         );

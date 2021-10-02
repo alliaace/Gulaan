@@ -14,7 +14,7 @@ export default class input extends Component {
             <KeyboardAvoidingView>
                 <TextInput
                     placeholder={this.props.placeholder}
-                    style={styles.input}
+                    style={[styles.input, this.props.style]}
                     onChangeText={this.props.onChangeText}
                     placeholderTextColor="black"
                     secureTextEntry={this.props.issecure}

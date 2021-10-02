@@ -33,14 +33,15 @@ class home extends Component {
     }
 
     componentDidMount = () => {
+        // alert(this.props.userdata._id)
         jsonserver.get(`user/all_customizations_of_user/${this.props.userdata._id}`)
             .then((response) => {
 
-                alert(JSON.stringify(response.data.data));
+                // alert(JSON.stringify(response.data.data));
                 this.setState({ history: response.data.data })
             })
             .catch((error) => {
-                // alert(JSON.stringify(error.response))
+                alert(JSON.stringify(error.response))
             })
     };
     refresh() {
@@ -68,6 +69,7 @@ class home extends Component {
                     onRefresh={() => this.refresh()}
                 />
             }>
+                {/* <Text style={{ fontSize: 18, color: 'white' }}>{JSON.stringify(this.state.history)}</Text> */}
                 <View style={styles.innerView}>
                     <Text style={{ fontSize: 26 }}>Your Custom Suits</Text>
                     {typeof this.state.history != 'undefined' ? this.state.history.map((item) => <SuitCard item={item} heartState={item.heartState} />) : <Text>There is no history</Text>}

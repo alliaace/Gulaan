@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import Ionicon from "react-native-vector-icons/Ionicons"
 import { connect } from 'react-redux';
 import jsonserver from '../../api/server'
+import Modal from 'react-native-modal'
+import { ScrollView } from 'react-native-gesture-handler';
+import Input from '../generic/input'
+import { White } from '../../Constants';
+import CustomButton from '../generic/button'
 class tailorCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
       image: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Dress_MET_69.2.1_front_CP4.jpg/220px-Dress_MET_69.2.1_front_CP4.jpg",
       heartState: this.props.heartState,
-      data: ""
+      data: "",
+      requestAppointment: this.props.requested
 
     };
   }
@@ -63,11 +69,23 @@ class tailorCard extends Component {
     }
 
   }
+  requestATailor = async () => {
+    // alert(JSON.stringify(this.props.userdata._id))
+    this.setState({ requestAppointment: !this.state.requestAppointment })
+    jsonserver.post('tailor/bidingRequest', {
+      tailor_id: this.props.item._id,
+      user_id: this.props.userdata._id
+
+    }).then(res => { })
+      .catch(err => this.setState({ requestAppointment: !this.state.requestAppointment }))
+  }
+
   render() {
     return (
       <View style={styles.card}>
         <View style={styles.cardContent}>
 
+          {/* <Text>{JSON.stringify(this.props.item.data.first_name)}</Text> */}
           <TouchableOpacity
             onPress={() => {
               this.handleFav()
@@ -92,9 +110,18 @@ class tailorCard extends Component {
             />
             <View style={{ flexDirection: 'row', marginTop: 20 }}>
               <Text style={styles.text}>Name: </Text>
-              <Text>
+              <Text style={{ width: '43%', }}>
                 {this.props.item.first_name} {this.props.item.last_name}
               </Text>
+              <TouchableOpacity onPress={this.requestATailor}>
+                <Text style={{ color: 'blue' }}>
+                  {/* {JSON.stringify(this.props.item.requested)} */}
+                  {!this.state.requestAppointment ?
+                    "Request Appointment" :
+                    "Requested"
+                  }
+                </Text>
+              </TouchableOpacity>
             </View>
             {this.props.showData && (
               <>
@@ -140,6 +167,8 @@ const styles = StyleSheet.create({
   text: {
     fontWeight: 'bold',
     fontSize: 15,
+    // backgroundColor: 'green',
+    width: '20%'
   },
 });
 const mapStateToProps = state => {

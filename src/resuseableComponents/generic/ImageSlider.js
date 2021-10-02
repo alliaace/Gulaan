@@ -84,7 +84,7 @@ export default class MyCarousel extends React.Component {
                         renderItem={this._renderItem}
                         onSnapToItem={index => this.setState({ activeIndex: index })} />
                 </View>
-                {this.pagination}
+                {/* {this.pagination} */}
 
             </SafeAreaView>
         );
