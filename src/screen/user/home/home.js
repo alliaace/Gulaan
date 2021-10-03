@@ -23,14 +23,15 @@ import SearchBar from "../../../resuseableComponents/generic/serachbar"
 import jsonserver from '../../../api/server'
 import { resolvePreset } from '@babel/core';
 import Modal from 'react-native-modal';
+import Geolocation from '@react-native-community/geolocation';
 
 
 class home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tailor: false,
-      trending: true,
+      tailor: true,
+      trending: false,
       tailordata: [],
       allposts: [],
       tailorPicForSlider: null,
@@ -45,6 +46,8 @@ class home extends Component {
       modalData: [],
       modaldecision: false,
       refreshing: false,
+      currentLatitude: 0,
+      currentLongitude: 0,
 
     };
   }
@@ -81,8 +84,14 @@ class home extends Component {
       .then((response) => {
         this.props.set_user_all_fav_tailor(response.data.data[0].favorite_tailors)
         jsonserver
-          .get(
-            `user/get_all_tailors/${this.props.userdata._id}`,
+          // .get(
+          //   `user/get_all_tailors/${this.props.userdata._id}`,
+          // )
+          .post(
+            `tailor/all_near_tailors`, {
+            lang: this.state.currentLongitude,
+            lat: this.state.currentLatitude
+          }
           )
           .then(response => {
             var temp = this.props.userfavtailor
@@ -202,6 +211,37 @@ class home extends Component {
       })
 
 
+    Geolocation.getCurrentPosition(
+
+      (position) => {
+        // alert(JSON.stringify(position))
+        const currentLongitude =
+          (position.coords.longitude);
+
+
+        const currentLatitude =
+          (position.coords.latitude);
+
+        //Setting Longitude state
+        this.setState({
+          currentLatitude,
+          currentLongitude
+        })
+        // setCurrentLongitude(currentLongitude);
+
+        // //Setting Longitude state
+        // setCurrentLatitude(currentLatitude);
+      },
+      (error) => {
+        // setLocationStatus(error.message);
+      },
+      {
+        enableHighAccuracy: false,
+        timeout: 30000,
+        maximumAge: 1000
+      },
+    );
+
 
 
   };
@@ -312,7 +352,8 @@ class home extends Component {
         <View style={styles.innerView}>
           <Modal isVisible={this.state.modaldecision}>
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
-              <TailorCard item={this.state.modalData} showData={this.state.modaldecision} heartState={this.state.modalData.heartState} canFav={true} />
+              {/* <Text>{JSON.stringify(this.state.modalData)}</Text> */}
+              <TailorCard item={this.state.modalData.data} showData={this.state.modaldecision} heartState={this.state.modalData.heartState} canFav={true} />
               <CustomButton buttontext="close" onPress={() => this.setState({ modaldecision: false })} />
             </View>
           </Modal>
@@ -370,6 +411,8 @@ class home extends Component {
           </View>
           {this.state.tailor && (
             <>
+              <Text>{this.state.currentLatitude}</Text>
+              <Text>{this.state.currentLongitude}</Text>
               <SearchBar onChangeText={(a) => this.searchTailor(a)} />
               {this.state.tailordata.map((x) => <TailorCard item={x.data} onPress={() => this.setState({ modalData: x, modaldecision: true })} heartState={x.heartState} canFav={true} requested={x.requested} />)}
             </>

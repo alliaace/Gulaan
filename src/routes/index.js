@@ -116,7 +116,7 @@ function Routes() {
         screenOptions={{
           headerShown: false,
         }}
-        initialRouteName="MAP">
+        initialRouteName="TAILORSIGNIN">
         <Stack.Screen name="SIGNIN" component={Screen.SIGNIN} />
         <Stack.Screen name="SIGNUP" component={Screen.SIGNUP} />
         <Stack.Screen name="TAILORSIGNIN" component={Screen.TAILORSIGNIN} />

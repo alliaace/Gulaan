@@ -14,11 +14,12 @@ import {
     Button,
     Dimensions,
 } from 'react-native';
+import CustomButton from '../../resuseableComponents/generic/button'
 
 //import all the components we are going to use.
 import Geolocation from '@react-native-community/geolocation';
 
-const Map = () => {
+const Map = (props) => {
     const [
         currentLongitude,
         setCurrentLongitude
@@ -66,8 +67,13 @@ const Map = () => {
 
     return (
         <>
-            {/* <Text>{(currentLatitude)}</Text>
-            <Text>{(currentLongitude)}</Text> */}
+            <CustomButton buttontext="Done" onPress={() => props.navigation.navigate('TAILORSIGNUP', { lat: currentLatitude, long: currentLongitude })} style={{
+                width: 50,
+                position: 'absolute',
+                marginTop: 10,
+                zIndex: 100000,
+                alignSelf: 'flex-end',
+            }} />
             <MapView
                 region={{
                     latitude: currentLatitude,
@@ -76,6 +82,7 @@ const Map = () => {
                     longitudeDelta: 0.0421,
                 }}
                 style={{ height: Dimensions.get('window').height, width: Dimensions.get('window').width }}
+                // style={{ height: 100, width: 100 }}
                 initialRegion={{
                     latitude: currentLatitude,
                     longitude: currentLongitude,

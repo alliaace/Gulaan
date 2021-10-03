@@ -86,7 +86,7 @@ export default class RequestCard extends Component {
 
                     </View>
                     {this.props.incomming ?
-                        <TouchableOpacity onPress={() => this.setState({ openModal: !this.state.openModal })}>
+                        <TouchableOpacity onPress={() => this.setState({ openModal: !this.state.openModal })} disabled={this.state.status == "Completed" ? true : false}>
 
                             <Text style={{ color: 'blue' }}>
                                 {this.state.status}

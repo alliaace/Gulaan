@@ -40,7 +40,7 @@ class request extends Component {
                     this.state.receiveRequest &&
                     this.state.allRequestDataOfTailor.map(x =>
                         !x.post &&
-                        <RequestCard data={x} incomming={true} />
+                        <RequestCard data={x} incomming={true} tailordata={this.props.tailordata} />
                     )
                 }
                 {

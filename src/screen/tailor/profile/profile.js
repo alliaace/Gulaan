@@ -22,17 +22,17 @@ class profile extends Component {
             userAllPosts: [],
             userAllFavoriteData: (this.props.userAllFavoriteData),
             data: (this.props.tailordata),
-            first_name: (this.props.tailordata).first_name,
-            last_name: (this.props.tailordata).last_name,
-            password: (this.props.tailordata).password,
-            address: (this.props.tailordata).address,
-            phone: '0' + (this.props.tailordata).contact,
-            city: (this.props.tailordata).city,
-            experience: (this.props.tailordata).experience,
-            averagerate: (this.props.tailordata).average_rate_per_stitching,
+            first_name: (this.props.tailordata)?.first_name,
+            last_name: (this.props.tailordata)?.last_name,
+            password: (this.props.tailordata)?.password,
+            address: (this.props.tailordata)?.address,
+            phone: '0' + (this.props.tailordata)?.contact,
+            city: (this.props.tailordata)?.city,
+            experience: (this.props.tailordata)?.experience,
+            averagerate: (this.props.tailordata)?.average_rate_per_stitching,
             // dp: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6PQwCtxfamerWvqVDooqSR9ArzJ_gIIbyZQ&usqp=CAU"
             // dp: "file:///data/user/0/com.gulaan/cache/rn_image_picker_lib_temp_6518f099-1bf5-492a-bb86-c501a4a83e65.jpg"
-            dp: this.props.tailordata.profile_photo
+            dp: this.props.tailordata?.profile_photo
         };
     }
     updateTailorData() {

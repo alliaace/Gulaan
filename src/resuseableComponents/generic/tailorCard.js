@@ -85,7 +85,7 @@ class tailorCard extends Component {
       <View style={styles.card}>
         <View style={styles.cardContent}>
 
-          {/* <Text>{JSON.stringify(this.props.item.data.first_name)}</Text> */}
+          {/* <Text>{JSON.stringify(this.props.item)}</Text> */}
           <TouchableOpacity
             onPress={() => {
               this.handleFav()

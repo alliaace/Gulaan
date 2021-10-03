@@ -21,6 +21,8 @@ export default class button extends Component {
                     borderRadius: 5,
                     marginTop: 20,
 
+
+
                 }, this.props.style]}
                 onPress={this.props.onPress}
             >

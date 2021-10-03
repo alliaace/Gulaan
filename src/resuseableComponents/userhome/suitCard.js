@@ -1,7 +1,7 @@
 import axios from 'axios';
 import moment from 'moment';
 import React, { Component } from 'react';
-import { View, Text, ImageBackground, TouchableOpacity, Image } from 'react-native';
+import { View, Text, ImageBackground, TouchableOpacity, Image, Linking } from 'react-native';
 import Ionicon from "react-native-vector-icons/Ionicons"
 import { connect } from 'react-redux';
 import { Avatar } from 'react-native-elements';
@@ -23,7 +23,8 @@ class suitCard extends Component {
       openModal: false,
       amount: 0,
       days: 0,
-      request: false
+      request: false,
+      isAccount: false
     };
 
   }
@@ -84,19 +85,47 @@ class suitCard extends Component {
 
     }
   }
+  async creditCardInformation() {
+    const res1 = await jsonserver.put(`tailor/stripe_account/${this.props.tailordata._id}`, {
+      email: this.state.emailForStripe
+    })
+    if (res1.data.redirect) {
+      // alert(res1.data.redirect)
+      Linking.openURL(res1.data.redirect)
+      this.toggleModal()
+      this.setState({ isAccount: true })
+      return
+    }
+    alert(JSON.stringify(res1.data))
+  }
   _RenderModal = () => {
-    return (
-      <Modal isVisible={this.state.openModal} onBackdropPress={this.toggleModal}>
-        <View style={{ backgroundColor: White, paddingHorizontal: 10, paddingBottom: 20 }}>
-          <Text style={{ fontSize: 26 }}>Information before requesting</Text>
-          <Input placeholder="Amount you will charge" onChangeText={(data) => this.setState({ amount: data })} style={{ width: '100%' }} type="numeric" />
-          <Input placeholder="Days you will take" onChangeText={(data) => this.setState({ days: data })} style={{ width: '100%' }} type="numeric" />
-          {/* <Input placeholder="Expiry Month" onChangeText={(data) => this.setState({ length: data })} style={{ width: '100%' }} />
+
+    // let isAccount = this.props.tailordata.stripe_account_id == "" ? false : true
+
+    if (!this.state.isAccount)
+
+      return (
+        <Modal isVisible={this.state.openModal} onBackdropPress={this.toggleModal}>
+          <View style={{ backgroundColor: White, paddingHorizontal: 10, paddingBottom: 20 }}>
+            <Text style={{ fontSize: 24 }}>Account Information before requesting</Text>
+            <Input placeholder="Enter Registred Email" onChangeText={(data) => this.setState({ emailForStripe: data })} style={{ width: '100%' }} />
+            <CustomButton buttontext="Submit" style={{ width: '100%' }} onPress={() => this.creditCardInformation(this)} />
+          </View>
+        </Modal>
+      )
+    else
+      return (
+        <Modal isVisible={this.state.openModal} onBackdropPress={this.toggleModal}>
+          <View style={{ backgroundColor: White, paddingHorizontal: 10, paddingBottom: 20 }}>
+            <Text style={{ fontSize: 26 }}>Information before requesting</Text>
+            <Input placeholder="Amount you will charge" onChangeText={(data) => this.setState({ amount: data })} style={{ width: '100%' }} type="numeric" />
+            <Input placeholder="Days you will take" onChangeText={(data) => this.setState({ days: data })} style={{ width: '100%' }} type="numeric" />
+            {/* <Input placeholder="Expiry Month" onChangeText={(data) => this.setState({ length: data })} style={{ width: '100%' }} />
           <Input placeholder="Expiry Year" onChangeText={(data) => this.setState({ length: data })} style={{ width: '100%' }} /> */}
-          <CustomButton buttontext="Request" style={{ width: '100%' }} onPress={this.requestAUser.bind(this)} />
-        </View>
-      </Modal>
-    )
+            <CustomButton buttontext="Request" style={{ width: '100%' }} onPress={this.requestAUser.bind(this)} />
+          </View>
+        </Modal>
+      )
   }
   toggleModal = () => {
     this.setState({ openModal: !this.state.openModal })
@@ -140,7 +169,7 @@ class suitCard extends Component {
         elevation: 10,
 
       }}>
-        {/* <Text style={{ fontSize: 20 }}>{JSON.stringify(this.props.tailordata._id)}</Text> */}
+        {/* <Text style={{ fontSize: 20 }}>{JSON.stringify(this.props.tailordata)}</Text> */}
         {/* <Text>{console.log(this.props.item.images[0])}</Text> */}
         <this._RenderModal />
         <View style={{ width: "100%", height: "100%", backgroundColor: "white", borderRadius: 25 }}>

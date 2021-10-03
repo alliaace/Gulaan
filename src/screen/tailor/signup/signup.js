@@ -27,6 +27,8 @@ export default class signup extends Component {
       experience: '',
       average_rate: null,
       address: '',
+      lat: this.props.route.params?.lat,
+      long: this.props.route.params?.long,
     };
   }
   signup() {
@@ -40,20 +42,27 @@ export default class signup extends Component {
         city: this.state.city,
         experience: this.state.experience,
         average_rate_per_stitching: this.state.average_rate,
-        address: this.state.address,
+        address: this.state.city,
+        lang: (this.props.route.params.long),
+        lat: (this.props.route.params.lat),
       })
       .then(response => {
-        alert('SignUp successfully, login to continue');
-        this.props.navigation.navigate('TAILORSIGNUP');
+        alert(JSON.stringify(response))
+        // alert('SignUp successfully, login to continue');
+        // this.props.navigation.navigate('TAILORSIGNIN');
       })
       .catch(error => console.log(error.response));
   }
+
   render() {
     return (
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <ImageBackground source={{ uri: "https://previews.123rf.com/images/vectorchoice/vectorchoice1605/vectorchoice160500095/57692765-vector-abstract-upholstery-dark-green-background-can-be-used-in-cover-design-book-design-website-bac.jpg" }}
           style={styles.main}>
           <KeyboardAvoidingView style={styles.innerView}>
+            {/* <Text>{JSON.stringify(this.props.route.params)}</Text>
+            <Text>{JSON.stringify(this.props.lat)}</Text>
+            <Text>{JSON.stringify(this.props.long)}</Text> */}
             {/* <Header
               backgroundColor={Dpurple}
               placement="left"
@@ -119,10 +128,11 @@ export default class signup extends Component {
                 onChangeText={uaverage => this.setState({ average_rate: uaverage })}
                 type="numeric"
               />
-              <Input
+              {/* <Input
                 placeholder="Address"
                 onChangeText={uaddress => this.setState({ address: uaddress })}
-              />
+              /> */}
+              <CustomButton buttontext="Get Exact Location" onPress={() => this.props.navigation.navigate('MAP')} />
               <CustomButton buttontext="Register" onPress={() => this.signup()} />
               <Text
                 style={{ marginTop: 20, }}

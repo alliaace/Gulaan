@@ -43,7 +43,7 @@ class login extends Component {
           this.setState({ tailordata: response.data });
           this.props.setTailorData(response.data.data);
           this.props.navigation.navigate('TAILORDASHBOARD');
-          // this.props.navigation.navigate('DASHBOARD');
+
         })
         .catch(error => {
           console.log('------------------------------------------------');
