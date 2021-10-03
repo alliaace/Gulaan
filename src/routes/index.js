@@ -100,9 +100,9 @@ function MyTailorTabs() {
         style: { backgroundColor: Lpurple },
       }}>
       <Tab.Screen name="Home" component={Screen.TAILORHOME} />
-      <Tab.Screen name="Customize" component={Screen.CUSTOMIZE} />
+      {/* <Tab.Screen name="Customize" component={Screen.CUSTOMIZE} /> */}
       <Tab.Screen name="Requests" component={Screen.TAILORREQUEST} />
-      <Tab.Screen name="History" component={Screen.HISTORY} />
+      {/* <Tab.Screen name="History" component={Screen.HISTORY} /> */}
       <Tab.Screen name="Profile" component={Screen.TAILORPROFILE} />
     </Tab.Navigator>
   );
