@@ -30,8 +30,8 @@ class home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tailor: true,
-      trending: false,
+      tailor: false,
+      trending: true,
       tailordata: [],
       allposts: [],
       tailorPicForSlider: null,

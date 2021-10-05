@@ -32,8 +32,8 @@ export default class signup extends Component {
     };
   }
   signup() {
-    axios
-      .post('http://peaceful-cliffs-40451.herokuapp.com/api/tailor/signup', {
+    JsonServer
+      .post('tailor/signup', {
         first_name: this.state.firstname,
         last_name: this.state.lastname,
         email: this.state.email,
@@ -47,9 +47,9 @@ export default class signup extends Component {
         lat: (this.props.route.params.lat),
       })
       .then(response => {
-        alert(JSON.stringify(response))
-        // alert('SignUp successfully, login to continue');
-        // this.props.navigation.navigate('TAILORSIGNIN');
+        // alert(JSON.stringify(response))
+        alert('SignUp successfully, login to continue');
+        this.props.navigation.navigate('TAILORSIGNIN');
       })
       .catch(error => console.log(error.response));
   }
