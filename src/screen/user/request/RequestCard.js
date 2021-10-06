@@ -34,7 +34,8 @@ export default class RequestCard extends Component {
             card_number: this.state.cardNumber,
             exp_month: this.state.EM,
             exp_year: this.state.EY,
-            cvc: this.state.CVC
+            cvc: this.state.CVC,
+            request_from: 'user'
         })
         if (res.data.success) {
             if (this.state.status == "Mark Complete")
@@ -51,61 +52,65 @@ export default class RequestCard extends Component {
     async cancelRequest() {
 
         const res = await jsonserver.put(`tailor/update_bidding_status/${this.props.data._id}`, {
-            status: 'rejected'
+            status: 'rejected',
+
         })
         if (res.data.success)
             this.setState({ cancel: 'Canceled' })
     }
     render() {
         var data = this.props.data
-        return (
-            <View style={{ width: '95%', backgroundColor: White, marginVertical: 10, borderWidth: 0.5 }}>
-                {/* <Text>{JSON.stringify(this.state.status)}</Text> */}
-                <Modal isVisible={this.state.openModal} onBackdropPress={this.toggleModal.bind(this)}>
-                    <View style={{ backgroundColor: White, paddingHorizontal: 10, paddingBottom: 20 }}>
-                        <Text style={{ fontSize: 24 }}>Account Information before requesting</Text>
-                        <Input placeholder="Card Number" onChangeText={(data) => this.setState({ cardNumber: data })} style={{ width: '100%' }} type="numeric" />
-                        <Input placeholder="Expiry Month" onChangeText={(data) => this.setState({ EM: data })} style={{ width: '100%' }} type="numeric" />
-                        <Input placeholder="Expiry Year" onChangeText={(data) => this.setState({ EY: data })} style={{ width: '100%' }} type="numeric" />
-                        <Input placeholder="CVC" onChangeText={(data) => this.setState({ CVC: data })} style={{ width: '100%' }} type="numeric" />
-                        {/* <Input placeholder="Expiry Month" onChangeText={(data) => this.setState({ length: data })} style={{ width: '100%' }} />
+        if (data.status != 'accepted')
+            return (
+                <View style={{ width: '95%', backgroundColor: White, marginVertical: 10, borderWidth: 0.5 }}>
+                    {/* <Text>{JSON.stringify(this.props.data.status)}</Text> */}
+                    <Modal isVisible={this.state.openModal} onBackdropPress={this.toggleModal.bind(this)}>
+                        <View style={{ backgroundColor: White, paddingHorizontal: 10, paddingBottom: 20 }}>
+                            <Text style={{ fontSize: 24 }}>Account Information before requesting</Text>
+                            <Input placeholder="Card Number" onChangeText={(data) => this.setState({ cardNumber: data })} style={{ width: '100%' }} type="numeric" />
+                            <Input placeholder="Expiry Month" onChangeText={(data) => this.setState({ EM: data })} style={{ width: '100%' }} type="numeric" />
+                            <Input placeholder="Expiry Year" onChangeText={(data) => this.setState({ EY: data })} style={{ width: '100%' }} type="numeric" />
+                            <Input placeholder="CVC" onChangeText={(data) => this.setState({ CVC: data })} style={{ width: '100%' }} type="numeric" />
+                            {/* <Input placeholder="Expiry Month" onChangeText={(data) => this.setState({ length: data })} style={{ width: '100%' }} />
           <Input placeholder="Expiry Year" onChangeText={(data) => this.setState({ length: data })} style={{ width: '100%' }} /> */}
-                        <CustomButton buttontext="Submit" style={{ width: '100%' }} onPress={() => this.creditCardInformation(this)} />
-                    </View>
-                </Modal>
+                            <CustomButton buttontext="Submit" style={{ width: '100%' }} onPress={() => this.creditCardInformation(this)} />
+                        </View>
+                    </Modal>
 
 
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Image source={{ uri: data.tailor.profile_photo }} style={{ height: 100, width: 100 }} />
-                    <View style={{ width: '50%', marginLeft: 10 }}>
-                        <Text>{data.tailor.first_name} {data.tailor.last_name}</Text>
-                        <Text>{data.tailor.address}</Text>
-                        {
-                            data.status != 'pending' &&
-                            <>
-                                <Text>{data.tailor.email}</Text>
-                                <Text>{data.tailor.contact}</Text>
-                            </>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <Image source={{ uri: data.tailor.profile_photo }} style={{ height: 100, width: 100 }} />
+                        <View style={{ width: '50%', marginLeft: 10 }}>
+                            <Text>{data.tailor.first_name} {data.tailor.last_name}</Text>
+                            <Text>{data.tailor.address}</Text>
+                            {
+                                data.status != 'pending' &&
+                                <>
+                                    <Text>{data.tailor.email}</Text>
+                                    <Text>{data.tailor.contact}</Text>
+                                </>
+                            }
+
+                        </View>
+                        {this.props.incomming ?
+                            <TouchableOpacity onPress={() => this.setState({ openModal: !this.state.openModal })} disabled={this.state.status == "Completed" ? true : false}>
+
+                                <Text style={{ color: 'blue' }}>
+                                    {this.state.status}
+                                </Text>
+                            </TouchableOpacity>
+                            :
+                            <TouchableOpacity onPress={() => this.cancelRequest()}>
+
+                                <Text style={{ color: 'red' }}>
+                                    {this.state.cancel}
+                                </Text>
+                            </TouchableOpacity>
                         }
-
                     </View>
-                    {this.props.incomming ?
-                        <TouchableOpacity onPress={() => this.setState({ openModal: !this.state.openModal })} disabled={this.state.status == "Completed" ? true : false}>
-
-                            <Text style={{ color: 'blue' }}>
-                                {this.state.status}
-                            </Text>
-                        </TouchableOpacity>
-                        :
-                        <TouchableOpacity onPress={() => this.cancelRequest()}>
-
-                            <Text style={{ color: 'red' }}>
-                                {this.state.cancel}
-                            </Text>
-                        </TouchableOpacity>
-                    }
                 </View>
-            </View>
-        )
+            )
+        else
+            return (<></>)
     }
 }

@@ -19,10 +19,10 @@ export default class RequestCard extends Component {
     }
     async acceptRequest() {
 
-        // alert(this.state.status == "Accept" ? 'accepted' : this.state.status == 'Mark Complete' && "completed")
+        // alert(this.state.status == "PENDING" ? 'ACCEPTED' : "ACCEPTED")
         try {
             const res = await jsonserver.put(`tailor/update_bidding_status/${this.props.data._id}`, {
-                status: this.state.status == "PENDING" ? 'ACCEPTED' : "ACCEPTED",
+                status: this.state.status == "PENDING" ? 'accepted' : "accepted",
                 request_from: 'tailor'
                 // card_number: this.state.cardNumber,
                 // exp_month: this.state.EM,
@@ -33,8 +33,8 @@ export default class RequestCard extends Component {
                 alert(JSON.stringify(res.data.message))
             // if (this.state.status == "Mark Complete")
             //     this.setState({ status: "Completed" })
-            if (this.state.status == "Accept")
-                this.setState({ status: "Accepted" })
+            if (this.state.status == "PENDING")
+                this.setState({ status: "ACCEPTED" })
         } catch (error) {
             alert(JSON.stringify(error))
         }
