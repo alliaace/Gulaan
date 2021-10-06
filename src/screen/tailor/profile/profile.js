@@ -200,8 +200,8 @@ class profile extends Component {
                             <ScrollView contentContainerStyle={{ marginTop: 10, alignItems: 'center', paddingBottom: 30 }}>
 
 
-                                {typeof this.state.userAllPosts === 'string' ?
-                                    <Text>{this.state.userAllPosts}</Text> :
+                                {typeof this.state.userAllPosts === 'string' || this.state.userAllPosts.length == 0 ?
+                                    <Text>No record Available </Text> :
                                     this.state.userAllPosts.map((x) =>
                                         <SuitCard item={x} heartState={x.heartState} />
                                     )
@@ -213,8 +213,9 @@ class profile extends Component {
                             <ScrollView contentContainerStyle={{ marginTop: 10, alignItems: 'center', paddingBottom: 30 }}>
 
 
-                                {typeof this.props.userAllFavoriteData === 'undefined' ?
-                                    <Text>{this.state.userAllPosts}</Text> :
+                                {!this.props.userAllFavoriteData ?
+                                    <Text>No record Available</Text> :
+                                    // <Text>{JSON.stringify(this.props.userAllFavoriteData)}</Text>
 
                                     this.props.userAllFavoriteData.map((y) =>
                                         <SuitCard item={y} heartState="heart" />

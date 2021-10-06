@@ -72,7 +72,7 @@ class home extends Component {
                 {/* <Text style={{ fontSize: 18, color: 'white' }}>{JSON.stringify(this.state.history)}</Text> */}
                 <View style={styles.innerView}>
                     <Text style={{ fontSize: 26 }}>Your Custom Suits</Text>
-                    {typeof this.state.history != 'undefined' ? this.state.history.map((item) => <SuitCard item={item} heartState={item.heartState} />) : <Text>There is no history</Text>}
+                    {this.state.history ? this.state.history.length == 0 ? <Text>There is no history</Text> : this.state.history.map((item) => <SuitCard item={item} heartState={item.heartState} />) : <Text>There is no history</Text>}
                 </View>
             </ScrollView>
         );
