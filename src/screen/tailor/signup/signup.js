@@ -47,9 +47,14 @@ export default class signup extends Component {
         lat: (this.props.route.params.lat),
       })
       .then(response => {
-        // alert(JSON.stringify(response))
-        alert('SignUp successfully, login to continue');
-        this.props.navigation.navigate('TAILORSIGNIN');
+        if (response.data.success) {
+          alert('SignUp successfully, login to continue');
+          this.props.navigation.navigate('TAILORSIGNIN');
+        }
+        else {
+          alert(JSON.stringify(response.data.message))
+
+        }
       })
       .catch(error => console.log(error.response));
   }

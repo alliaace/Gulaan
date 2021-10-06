@@ -39,10 +39,15 @@ class login extends Component {
           password: this.state.password,
         })
         .then(response => {
-          console.log(response.data);
-          this.setState({ tailordata: response.data });
-          this.props.setTailorData(response.data.data);
-          this.props.navigation.navigate('TAILORDASHBOARD');
+          // alert(JSON.stringify(response.data));
+          if (response.data.success) {
+            this.setState({ tailordata: response.data });
+            this.props.setTailorData(response.data.data);
+            this.props.navigation.navigate('TAILORDASHBOARD');
+          }
+          else {
+            alert((response.data.message))
+          }
 
         })
         .catch(error => {
