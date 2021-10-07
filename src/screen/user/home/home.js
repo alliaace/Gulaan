@@ -46,8 +46,8 @@ class home extends Component {
       modalData: [],
       modaldecision: false,
       refreshing: false,
-      currentLatitude: 0,
-      currentLongitude: 0,
+      currentLatitude: 33.652041,
+      currentLongitude: 73.156583,
 
     };
   }
@@ -87,11 +87,14 @@ class home extends Component {
           // .get(
           //   `user/get_all_tailors/${this.props.userdata._id}`,
           // )
-          .post(
-            `tailor/all_near_tailors`, {
-            lang: this.state.currentLongitude,
-            lat: this.state.currentLatitude
-          }
+          // .post(
+          //   `tailor/all_near_tailors`, {
+          //   lang: this.state.currentLongitude,
+          //   lat: this.state.currentLatitude
+          // }
+          // )
+          .get(
+            'user/get_all_tailors',
           )
           .then(response => {
             var temp = this.props.userfavtailor
@@ -411,8 +414,8 @@ class home extends Component {
           </View>
           {this.state.tailor && (
             <>
-              {/* <Text>{this.state.currentLatitude}</Text>
-              <Text>{this.state.currentLongitude}</Text> */}
+              <Text>{this.state.currentLatitude}</Text>
+              <Text>{this.state.currentLongitude}</Text>
               <SearchBar onChangeText={(a) => this.searchTailor(a)} />
               {this.state.tailordata.map((x) => <TailorCard item={x.data} onPress={() => this.setState({ modalData: x, modaldecision: true })} heartState={x.heartState} canFav={true} requested={x.requested} />)}
             </>
