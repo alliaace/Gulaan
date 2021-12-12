@@ -15,7 +15,9 @@ class tailorCard extends Component {
       image: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Dress_MET_69.2.1_front_CP4.jpg/220px-Dress_MET_69.2.1_front_CP4.jpg",
       heartState: this.props.heartState,
       data: "",
-      requestAppointment: this.props.requested
+      requestAppointment: this.props.requested,
+      complainModal: false,
+
 
     };
   }
@@ -80,20 +82,54 @@ class tailorCard extends Component {
       .catch(err => this.setState({ requestAppointment: !this.state.requestAppointment }))
   }
 
+  toggleComplainModal = () => {
+
+    this.setState({ complainModal: !this.state.complainModal })
+  }
+
+  complainATailor = () => {
+    this.toggleComplainModal()
+    setTimeout(() => {
+
+      alert(' Succesfully complained')
+    }, 1000);
+  }
+
   render() {
     return (
       <View style={styles.card}>
         <View style={styles.cardContent}>
+          <Modal isVisible={this.state.complainModal} onBackdropPress={this.toggleComplainModal}>
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+              <View style={{ height: 300, width: 350, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center' }}>
+                <Text>Make a Complain</Text>
+                <Input placeholder="What is the complain" style={{ width: 300, height: 100 }} />
+                <CustomButton buttontext="Submit" onPress={() => this.complainATailor()} style={{ backgroundColor: 'red', width: 300 }} />
+              </View>
+            </View>
+          </Modal>
 
           {/* <Text>{JSON.stringify(this.props.item)}</Text> */}
           <TouchableOpacity
             onPress={() => {
               this.handleFav()
+
+            }}
+            style={{ position: "absolute", marginLeft: "70%", marginTop: "2%", backgroundColor: "rgba(255,255,255,0.5)", borderRadius: 50, alignItems: "center", justifyContent: "center", zIndex: 10, }}
+          >
+            {this.props.canFav && (
+              <Ionicon name={this.state.heartState} size={30} color="red" />
+            )}
+
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              this.toggleComplainModal()
             }}
             style={{ position: "absolute", marginLeft: "90%", marginTop: "2%", backgroundColor: "rgba(255,255,255,0.5)", borderRadius: 50, alignItems: "center", justifyContent: "center", zIndex: 10, }}
           >
             {this.props.canFav && (
-              <Ionicon name={this.state.heartState} size={30} color="red" />
+              <Ionicon name={"warning-outline"} size={30} color="red" />
             )}
 
           </TouchableOpacity>
