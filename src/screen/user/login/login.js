@@ -76,7 +76,8 @@ class login extends Component {
           this.props.setUserData((response.data.data));
           this.props.navigation.navigate('USERDASHBOARD');
         })
-        .catch(error => ToastAndroid.show("Something Went Wrong!", ToastAndroid.SHORT));
+        .catch(error => console.log(error));
+      // .catch(error => ToastAndroid.show("Something Went Wrong!", ToastAndroid.SHORT));
     }
 
   }

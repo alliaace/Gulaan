@@ -152,6 +152,7 @@ class home extends Component {
           .then(response => {
             var temp = this.props.userAllFavoriteData
             var r = response.data.data
+            console.log(response.data.data);
             temp.map((x) => x.heartState = "heart")
             r.map((x) => x.heartState = "heart-outline")
             temp.map((j) => {
@@ -308,6 +309,8 @@ class home extends Component {
         });
       })
       formdata.append("description", this.state.postDiscription)
+      // alert(JSON.stringify(formdata))
+      // return
       jsonserver.post(`user/trend_upload/${userdata._id}`, formdata)
         .then((response) => {
           // Alert.alert(

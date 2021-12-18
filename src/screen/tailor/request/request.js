@@ -17,7 +17,12 @@ class request extends Component {
     componentDidMount() {
         // alert(this.props.tailordata._id)
         jsonserver.get(`tailor/get_all_biding/${this.props.tailordata._id}`)
-            .then(res => this.setState({ allRequestDataOfTailor: res.data.data }))
+            .then(res => {
+                if (res.data.data)
+                    this.setState({ allRequestDataOfTailor: res.data.data })
+            }
+
+            )
             .catch(err => alert(JSON.stringify(err)))
 
     }
