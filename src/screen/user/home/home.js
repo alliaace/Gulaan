@@ -81,6 +81,7 @@ class home extends Component {
         alert("something went wrong")
       })
 
+    alert('here')
     jsonserver.get(`user/get_all_favorite_tailors/${this.props.userdata._id}`)
       .then((response) => {
         this.props.set_user_all_fav_tailor(response.data.data[0].favorite_tailors)
@@ -101,6 +102,7 @@ class home extends Component {
             var temp = this.props.userfavtailor
             temp.map((x) => x.heartState = "heart")
             var alltemp = response.data.data
+            alert(response.data.data)
             alltemp.map((x) => x.heartState = "heart-outline")
             temp.map((j) => {
               alltemp.map((k) => {
@@ -141,6 +143,7 @@ class home extends Component {
 
   }
   componentDidMount = () => {
+
     jsonserver.get("user/all_favorite_posts/" + (this.props.userdata)._id)
       .then((response) => {
         this.props.set_user_all_fav_suit(response.data.data[0].favorite_posts)
@@ -170,12 +173,14 @@ class home extends Component {
 
     jsonserver.get(`user/get_all_favorite_tailors/${this.props.userdata._id}`)
       .then((response) => {
+
         this.props.set_user_all_fav_tailor(response.data.data[0].favorite_tailors)
         jsonserver
           .get(
-            `user/get_all_tailors/${this.props.userdata._id}`,
+            `user/get_all_tailors`,
           )
           .then(response => {
+
             var temp = this.props.userfavtailor
             temp.map((x) => x.heartState = "heart")
             var alltemp = response.data.data
@@ -206,6 +211,7 @@ class home extends Component {
 
           })
           .catch(error => {
+            alert('did')
             console.log(error.response);
 
           });
@@ -357,7 +363,7 @@ class home extends Component {
           <Modal isVisible={this.state.modaldecision}>
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
               {/* <Text>{JSON.stringify(this.state.modalData)}</Text> */}
-              <TailorCard item={this.state.modalData.data} showData={this.state.modaldecision} heartState={this.state.modalData.heartState} canFav={true} />
+              <TailorCard item={this.state.modalData} showData={this.state.modaldecision} heartState={this.state.modalData.heartState} canFav={true} />
               <CustomButton buttontext="close" onPress={() => this.setState({ modaldecision: false })} />
             </View>
           </Modal>
@@ -416,11 +422,12 @@ class home extends Component {
           {this.state.tailor && (
             <>
 
-              <Text>{this.state.currentLatitude}</Text>
+              {/* <Text>{this.state.currentLatitude}</Text>
               <Text>{this.state.currentLongitude}</Text>
+              <Text>{JSON.stringify(this.state.tailordata[0].first_name)}</Text> */}
               <SearchBar onChangeText={(a) => this.searchTailor(a)} />
               {this.state.tailordata.map((x) =>
-                <TailorCard item={x.data} onPress={() => this.setState({ modalData: x, modaldecision: true })} heartState={x.heartState} canFav={true} requested={x.requested} />
+                <TailorCard item={x} onPress={() => this.setState({ modalData: x, modaldecision: true })} heartState={x.heartState} canFav={true} requested={x.requested} />
               )}
 
             </>

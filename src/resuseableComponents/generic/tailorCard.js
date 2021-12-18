@@ -140,13 +140,14 @@ class tailorCard extends Component {
 
               }}
               style={{
-                height: '80%',
+                height: '70%',
                 width: '100%',
               }}
             />
             <View style={{ flexDirection: 'row', marginTop: 20 }}>
               <Text style={styles.text}>Name: </Text>
               <Text style={{ width: '43%', }}>
+                {/* {JSON.stringify(this.props)} */}
                 {this.props.item.first_name} {this.props.item.last_name}
               </Text>
               <TouchableOpacity onPress={this.requestATailor}>

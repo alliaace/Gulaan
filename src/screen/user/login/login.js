@@ -28,7 +28,7 @@ class login extends Component {
       // password: '12345678',
       // email: 't@t.com',
       // password: 'admin1234',
-      email: 'h@gmail.com',
+      email: 'a@a.com',
       password: 'admin1234',
       // email: '',
       // password: '',
